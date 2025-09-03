@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Signup.css';
 import logo from '../assets/mentorlink-logo.png';
-import { FiUser, FiMail, FiPhone, FiEdit2, FiChevronDown } from 'react-icons/fi';
+import { FiUser, FiMail, FiPhone, FiEdit2, FiChevronDown, FiLock } from 'react-icons/fi';
+import { userAPI } from '../services/api';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ const Signup = () => {
     email: '',
     bio: '',
     gender: '',
-    role: ''
+    role: '',
+    password: ''
   });
 
   const handleChange = (e) => {
@@ -21,22 +23,22 @@ const Signup = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    
-    // Handle role-based redirection
-    if (formData.role === 'student') {
-      navigate('/student-form');
-    } else if (formData.role === 'mentor') {
-      // Redirect to mentor form
-      navigate('/mentor-form');
-    } else if (formData.role === 'organizer') {
-      // Redirect to event organizer form
-      navigate('/event-organizer');
-    } else {
-      // Default redirection if no specific role is selected
+
+    try {
+      const response = await userAPI.signup(formData);
+      console.log('Signup response:', response);
+
+      // Store user ID for OTP verification
+      localStorage.setItem('userId', response.userId);
+
+      // Navigate to OTP verification page
       navigate('/otp');
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Signup failed: ' + error.message);
     }
   };
 
@@ -112,6 +114,21 @@ const Signup = () => {
                 name="email"
                 placeholder="Enter your Email"
                 value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Password*</label>
+            <div className="input-with-icon">
+              <FiLock className="input-icon" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your Password"
+                value={formData.password}
                 onChange={handleChange}
                 required
               />
