@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FiHome, FiUser, FiCalendar, FiUsers, FiSettings, FiMessageSquare } from "react-icons/fi";
+import { FiHome, FiUser, FiCalendar, FiUsers, FiSettings, FiMessageSquare, FiShield } from "react-icons/fi";
 import { useAuth } from "../../contexts/AuthContext";
 import { useChat } from "../../contexts/ChatContext";
 import "./Sidebar.css";
@@ -20,6 +20,7 @@ const Sidebar = () => {
   else if (path.includes("students")) active = "students";
   else if (path.includes("messages")) active = "messages";
   else if (path.includes("settings")) active = "settings";
+  else if (path.includes("admin")) active = "admin";
 
   // Decide profile path dynamically
   let profilePath = "student-profile";
@@ -48,6 +49,10 @@ const Sidebar = () => {
     { key: "students", icon: <FiUsers />, label: "Students", path: "students" },
     { key: "settings", icon: <FiSettings />, label: "Settings", path: "settings" },
   ];
+
+  if (user?.role === 'admin') {
+    items.splice(1, 0, { key: "admin", icon: <FiShield />, label: "Admin", path: "admin" });
+  }
 
   return (
     <aside className="sidebar">

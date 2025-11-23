@@ -1,7 +1,10 @@
+const mongoose = require('mongoose');
 const MentorshipRequest = require('../models/MentorshipRequest');
 const User = require('../models/User');
 const Mentor = require('../models/Mentor');
 const Student = require('../models/Student');
+const Notification = require('../models/Notification');
+const Conversation = require('../models/Conversation');
 
 // @desc    Submit a mentorship request
 // @route   POST /api/requests/:mentorId
@@ -122,6 +125,9 @@ const getRequestById = async (req, res) => {
 // @desc    Accept a mentorship request
 // @route   PUT /api/requests/:requestId/accept
 // @access  Private (Mentor)
+// @desc    Accept a mentorship request
+// @route   PUT /api/requests/:requestId/accept
+// @access  Private (Mentor)
 const acceptRequest = async (req, res) => {
   try {
     const { requestId } = req.params;
@@ -137,21 +143,71 @@ const acceptRequest = async (req, res) => {
       return res.status(404).json({ message: 'Pending request not found' });
     }
 
-    // Update request status
+    // Create conversation
+    const conversation = await Conversation.findOrCreateConversation(mentorUserId, request.student);
+
+    // Update request status and details
     request.status = 'accepted';
+    request.startDate = new Date();
+    request.role = 'current';
+    request.chatId = conversation ? conversation._id : null;
+    request.meta = {
+      acceptedBy: mentorUserId,
+      acceptedAt: new Date()
+    };
+
     await request.save();
 
-    // Add student to mentor's activeMentees
+    // Add student to mentor's activeMentees (Legacy support)
     const mentor = await Mentor.findOne({ user: mentorUserId });
     if (mentor) {
       if (!mentor.activeMentees) {
         mentor.activeMentees = [];
       }
-      if (!mentor.activeMentees.includes(request.student)) {
+      // Fix: Use proper ObjectId comparison
+      const studentExists = mentor.activeMentees.some(
+        (menteeId) => menteeId.toString() === request.student.toString()
+      );
+
+      if (!studentExists) {
         mentor.activeMentees.push(request.student);
+        // Update mentees count
+        mentor.menteesCount = mentor.activeMentees.length;
         await mentor.save();
       }
     }
+
+    // Get mentor and student details for notifications
+    const mentorUser = await User.findById(mentorUserId);
+    const studentUser = await User.findById(request.student);
+
+    // Create notification for student
+    await Notification.createNotification(request.student, {
+      type: 'request',
+      title: 'Mentorship Request Accepted!',
+      message: `${mentorUser.name} has accepted your mentorship request. You can now chat and schedule sessions!`,
+      link: `/mentor-profile/${mentor._id}`,
+      icon: 'check-circle',
+      data: {
+        mentorId: mentorUserId,
+        mentorName: mentorUser.name,
+        requestId: request._id,
+      },
+    });
+
+    // Create notification for mentor
+    await Notification.createNotification(mentorUserId, {
+      type: 'request',
+      title: 'Request Accepted',
+      message: `You accepted ${studentUser.name}'s mentorship request. They are now your active mentee!`,
+      link: `/mentor-profile`,
+      icon: 'check-circle',
+      data: {
+        studentId: request.student,
+        studentName: studentUser.name,
+        requestId: request._id,
+      },
+    });
 
     await request.populate('student', 'name email profileImage');
 

@@ -113,7 +113,8 @@
 
 .theme-toggle-square svg {
   font-size: 20px;
-  color: #4b5563;
+  color: #000000;
+  stroke: #000000;
 }
 
 /* ==================== DARK MODE ==================== */

@@ -26,7 +26,10 @@ const ScheduleSessionModal = ({ isOpen, onClose, mentee, onSchedule }) => {
 
     setLoading(true);
     try {
-      await onSchedule(formData);
+      await onSchedule({
+        ...formData,
+        chatId: mentee?.chatId
+      });
 
       // Reset form
       setFormData({
@@ -62,8 +65,8 @@ const ScheduleSessionModal = ({ isOpen, onClose, mentee, onSchedule }) => {
           <h2>Schedule a Session</h2>
           <button className="modal-close-btn" onClick={onClose}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>
@@ -89,10 +92,10 @@ const ScheduleSessionModal = ({ isOpen, onClose, mentee, onSchedule }) => {
             <label htmlFor="date">Date</label>
             <div className="input-with-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
-                <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M3 10H21" stroke="currentColor" strokeWidth="2"/>
+                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
+                <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path d="M3 10H21" stroke="currentColor" strokeWidth="2" />
               </svg>
               <input
                 type="date"
@@ -111,8 +114,8 @@ const ScheduleSessionModal = ({ isOpen, onClose, mentee, onSchedule }) => {
             <label htmlFor="time">Time</label>
             <div className="input-with-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
               <input
                 type="time"

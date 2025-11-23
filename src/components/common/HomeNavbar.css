@@ -58,40 +58,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #1f2937;
+  color: #000000;
   transition: all 0.2s ease;
   position: relative;
 }
 
-.icon-btn:hover {
-  background: #f9fafb;
-  border-color: #3b82f6;
-  transform: scale(1.08);
-}
-
-.icon-btn:active {
-  transform: scale(0.95);
-}
-
-.icon-btn svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-  stroke-width: 2.5;
-  fill: none;
-  color: inherit;
-  display: block;
-}
-
-.icon-btn svg path {
-  stroke: currentColor;
-  fill: none;
-}
-
-/* ==================== MESSAGES BUTTON ==================== */
-.messages-btn {
-  position: relative;
-}
 
 .messages-btn .badge {
   position: absolute;

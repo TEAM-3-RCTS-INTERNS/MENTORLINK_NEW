@@ -45,6 +45,7 @@ app.use('/api/sessions', require('./routes/sessionRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/follow', require('./routes/followRoutes'));
 app.use('/api/testimonials', require('./routes/testimonialRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 // Basic route
 app.get('/', (req, res) => {

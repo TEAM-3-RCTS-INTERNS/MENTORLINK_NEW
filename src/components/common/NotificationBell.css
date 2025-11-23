@@ -19,7 +19,7 @@
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #1f2937;
+  color: #000000;
 }
 
 .notification-bell-btn:hover {
@@ -35,7 +35,7 @@
 .bell-icon {
   width: 22px;
   height: 22px;
-  stroke: currentColor;
+  stroke: #000000;
   stroke-width: 2.5;
   fill: none;
   display: block;
@@ -69,9 +69,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
@@ -100,6 +103,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

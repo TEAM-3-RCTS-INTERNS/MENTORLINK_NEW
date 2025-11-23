@@ -48,6 +48,25 @@ const mentorshipRequestSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
   },
+  startDate: {
+    type: Date,
+  },
+  role: {
+    type: String,
+    enum: ['current', 'past'],
+    default: 'current',
+  },
+  chatId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Conversation',
+  },
+  meta: {
+    acceptedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    acceptedAt: Date,
+  },
 }, {
   timestamps: true,
 });

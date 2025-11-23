@@ -1,4 +1,5 @@
 const Mentor = require('../models/Mentor');
+const MentorshipRequest = require('../models/MentorshipRequest');
 
 // @desc    Create or update mentor profile
 // @route   POST /api/mentors
@@ -153,15 +154,26 @@ const getMyMentees = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const mentor = await Mentor.findOne({ user: userId }).populate('activeMentees', 'name email profileImage bio location');
+    // Find accepted mentorship requests
+    const acceptedRequests = await MentorshipRequest.find({
+      mentor: userId,
+      status: 'accepted'
+    }).populate('student', 'name email profileImage bio location');
 
-    if (!mentor) {
-      return res.status(404).json({ message: 'Mentor profile not found' });
-    }
+    // Extract student profiles and attach relationship info
+    const mentees = acceptedRequests.map(req => {
+      if (!req.student) return null;
+      const student = req.student.toObject();
+      // Attach relationship details that might be useful for frontend
+      student.chatId = req.chatId;
+      student.requestId = req._id;
+      student.mentorshipStartDate = req.startDate;
+      return student;
+    }).filter(Boolean);
 
     res.json({
-      mentees: mentor.activeMentees || [],
-      count: mentor.activeMentees?.length || 0
+      mentees: mentees,
+      count: mentees.length
     });
   } catch (error) {
     console.error('Error in getMyMentees:', error);

@@ -1,12 +1,13 @@
 const Session = require('../models/Session');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 
 // @desc    Create a new session
 // @route   POST /api/sessions
 // @access  Private
 const createSession = async (req, res) => {
   try {
-    const { studentId, date, time, duration, timezone, zoomLink, password, notes } = req.body;
+    const { studentId, date, time, duration, timezone, zoomLink, password, notes, chatId } = req.body;
     const mentorId = req.user._id;
 
     // Validate required fields
@@ -25,6 +26,7 @@ const createSession = async (req, res) => {
       {
         mentor: mentorId,
         student: studentId,
+        chatId,
         date,
         time,
         duration: duration || 30,
@@ -35,7 +37,8 @@ const createSession = async (req, res) => {
         createdBy: mentorId,
       },
       mentorId,
-      studentId
+      studentId,
+      student.name
     );
 
     // Populate student and mentor details
@@ -150,7 +153,8 @@ const updateSessionStatus = async (req, res) => {
     const { status } = req.body;
     const userId = req.user._id;
 
-    const session = await Session.findById(sessionId);
+    const session = await Session.findById(sessionId)
+      .populate('mentor student', 'name email profileImage');
 
     if (!session) {
       return res.status(404).json({ message: 'Session not found' });
@@ -158,16 +162,54 @@ const updateSessionStatus = async (req, res) => {
 
     // Check if user is part of the session
     if (
-      session.mentor.toString() !== userId.toString() &&
-      session.student.toString() !== userId.toString()
+      session.mentor._id.toString() !== userId.toString() &&
+      session.student._id.toString() !== userId.toString()
     ) {
       return res.status(403).json({ message: 'Not authorized to update this session' });
     }
 
+    const oldStatus = session.status;
     session.status = status;
     await session.save();
 
-    await session.populate('mentor student', 'name email profileImage');
+    // Get the other participant (who will receive the notification)
+    const otherParticipantId =
+      session.mentor._id.toString() === userId.toString()
+        ? session.student._id
+        : session.mentor._id;
+
+    const otherParticipantName =
+      session.mentor._id.toString() === userId.toString()
+        ? session.student.name
+        : session.mentor.name;
+
+    // Send notification on status change
+    if (oldStatus !== status) {
+      let notificationMessage = '';
+
+      if (status === 'cancelled') {
+        notificationMessage = `Your session scheduled for ${new Date(session.date).toLocaleDateString()} at ${session.time} has been cancelled`;
+      } else if (status === 'completed') {
+        notificationMessage = `Session on ${new Date(session.date).toLocaleDateString()} has been marked as completed`;
+      } else if (status === 'scheduled') {
+        notificationMessage = `Session on ${new Date(session.date).toLocaleDateString()} has been rescheduled`;
+      }
+
+      if (notificationMessage) {
+        await Notification.createNotification(otherParticipantId, {
+          type: 'session',
+          title: `Session ${status.charAt(0).toUpperCase() + status.slice(1)}`,
+          message: notificationMessage,
+          link: `/sessions/${session._id}`,
+          icon: status === 'cancelled' ? 'cancel' : 'calendar',
+          data: {
+            sessionId: session._id,
+            status: status,
+            updatedBy: userId,
+          },
+        });
+      }
+    }
 
     res.status(200).json({
       success: true,
@@ -187,7 +229,8 @@ const deleteSession = async (req, res) => {
     const { sessionId } = req.params;
     const userId = req.user._id;
 
-    const session = await Session.findById(sessionId);
+    const session = await Session.findById(sessionId)
+      .populate('mentor student', 'name email profileImage');
 
     if (!session) {
       return res.status(404).json({ message: 'Session not found' });
@@ -197,6 +240,30 @@ const deleteSession = async (req, res) => {
     if (session.createdBy.toString() !== userId.toString()) {
       return res.status(403).json({ message: 'Not authorized to delete this session' });
     }
+
+    // Get the other participant to notify them
+    const otherParticipantId =
+      session.mentor._id.toString() === userId.toString()
+        ? session.student._id
+        : session.mentor._id;
+
+    const currentUserName =
+      session.mentor._id.toString() === userId.toString()
+        ? session.mentor.name
+        : session.student.name;
+
+    // Send cancellation notification to the other participant
+    await Notification.createNotification(otherParticipantId, {
+      type: 'session',
+      title: 'Session Cancelled',
+      message: `${currentUserName} has cancelled the session scheduled for ${new Date(session.date).toLocaleDateString()} at ${session.time}`,
+      link: `/sessions`,
+      icon: 'cancel',
+      data: {
+        sessionId: session._id,
+        cancelledBy: userId,
+      },
+    });
 
     await session.deleteOne();
 

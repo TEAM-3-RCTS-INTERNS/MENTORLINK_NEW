@@ -29,6 +29,7 @@ import RequestReview from "./pages/RequestReview";
 import MentorBriefProfile from "./pages/MentorBriefProfile";
 import ConnectionRequestView from "./pages/ConnectionRequestView";
 import Messages from "./pages/Messages";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function AppContent() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function AppContent() {
     "/mentors",
     "/settings",
     "/host-an-event",
+    "/admin"
   ].includes(location.pathname) || location.pathname.startsWith("/messages");
 
   if (loading) return <div>Loading...</div>;
@@ -130,6 +132,16 @@ function AppContent() {
         <Route
           path="/connection-request/:requestId"
           element={<ConnectionRequestView />}
+        />
+
+        {/* Admin Route */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
         />
       </Routes>
 
