@@ -4,12 +4,14 @@ import axios from "axios";
 import HomeNavbar from "../components/common/HomeNavbar";
 import Sidebar from "../components/home/Sidebar";
 import { useAuth } from "../contexts/AuthContext";
+import { useLayout } from "../contexts/LayoutContext";
 import "./EventInfo.css";
 
 const EventInfo = () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { sidebarCollapsed } = useLayout();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isInterested, setIsInterested] = useState(false);
@@ -60,7 +62,7 @@ const EventInfo = () => {
     return (
       <div className="event-info-page">
         <HomeNavbar />
-        <div className="event-info-layout">
+        <div className={`event-info-layout${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
           <Sidebar />
           <div className="event-info-container">
             <div className="loading-container">
@@ -77,7 +79,7 @@ const EventInfo = () => {
     return (
       <div className="event-info-page">
         <HomeNavbar />
-        <div className="event-info-layout">
+        <div className={`event-info-layout${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
           <Sidebar />
           <div className="event-info-container">
             <div className="error-container">
@@ -100,7 +102,7 @@ const EventInfo = () => {
   return (
     <div className="event-info-page">
       <HomeNavbar />
-      <div className="event-info-layout">
+      <div className={`event-info-layout${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
         <Sidebar />
         <main className="event-info-main">
           {/* Back Button and Edit Button */}

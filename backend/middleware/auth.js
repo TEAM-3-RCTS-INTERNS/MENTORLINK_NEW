@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const AdminSession = require('../models/AdminSession');
 
 const protect = async (req, res, next) => {
   let token;
@@ -17,6 +18,11 @@ const protect = async (req, res, next) => {
 
       // Get user from the token
       req.user = await User.findById(decoded.id).select('-password');
+
+      // For admin users, track session activity
+      if (req.user && req.user.role === 'admin') {
+        await AdminSession.updateActivity(token);
+      }
 
       next();
     } catch (error) {

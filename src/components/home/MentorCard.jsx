@@ -1,23 +1,14 @@
 import React, { useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardActions,
-  Avatar,
-  Typography,
-  Chip,
-  Button,
-  Box,
-} from "@mui/material";
-import {
   FiCheckCircle,
-  FiLink2,
   FiUserPlus,
   FiUserCheck
 } from "react-icons/fi";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import PeopleIcon from '@mui/icons-material/People';
 import { followAPI } from "../../services/api";
+import "../../pages/StudentCard.css";
 import "./MentorCard.css";
 
 const MentorCard = ({ mentor, onClick }) => {
@@ -25,9 +16,11 @@ const MentorCard = ({ mentor, onClick }) => {
   const navigate = useNavigate();
 
   // Extract mentor data with fallbacks
-  const profileImage = mentor.user?.profileImage || mentor.avatar || 'https://i.pravatar.cc/150?img=1';
+  const profileImage = mentor.user?.profileImage || mentor.avatar || 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png';
   const name = mentor.user?.name || mentor.name || 'Mentor';
-  const bio = mentor.user?.bio || mentor.bio || 'Experienced professional passionate about mentoring and helping others grow.';
+  const rawBio = mentor.user?.bio || mentor.bio || 'Experienced professional passionate about mentoring and helping others grow.';
+  // Truncate bio text to ~180 characters for 3-4 lines display
+  const bio = rawBio.length > 180 ? rawBio.substring(0, 180) + "..." : rawBio;
   const role = mentor.role || mentor.title || 'Professional Mentor';
   const company = mentor.company || '';
   const experience = mentor.primaryExperience || mentor.experience || '5+ years';
@@ -35,7 +28,6 @@ const MentorCard = ({ mentor, onClick }) => {
   const verified = mentor.verified !== undefined ? mentor.verified : true;
   const userId = mentor.user?._id || mentor._id;
   const followersCount = mentor.user?.followersCount || mentor.followersCount || 0;
-  const coreDomain = mentor.primaryDomain || mentor.coreDomain || '';
 
   const [isFollowing, setIsFollowing] = useState(mentor.isFollowing || false);
   const [localFollowersCount, setLocalFollowersCount] = useState(followersCount);
@@ -72,118 +64,76 @@ const MentorCard = ({ mentor, onClick }) => {
     }
   };
 
-  const handleCardClick = () => {
+  const handleConnectClick = (e) => {
+    e.stopPropagation();
     if (onClick) onClick();
   };
 
-  const handleConnectClick = (e) => {
-    e.stopPropagation();
-    handleCardClick();
-  };
+  const displaySkills = skills.length > 3 ? skills.slice(0, 3) : skills;
+  const remainingSkills = skills.length > 3 ? skills.length - 3 : 0;
 
   return (
-    <Card className="mentor-brief-card">
-      <CardContent className="mentor-brief-content">
-        {/* Top Section: Avatar + Name/Title/Experience */}
-        <Box className="mentor-header-section">
-          {/* Left: Avatar */}
-          <Avatar
+    <div className="student-card mentor-card-pro" onClick={() => onClick && onClick()}>
+      {/* Header Section */}
+      <div className="mentor-card__header-pro">
+        <div className="mentor-avatar-wrapper-pro">
+          <img
             src={profileImage}
             alt={name}
-            className="mentor-avatar-brief"
+            className="mentor-card__avatar-pro"
           />
+          <div className="mentor-avatar-badge-pro">
+            <PeopleIcon style={{ fontSize: 10 }} />
+            <span>{localFollowersCount > 999 ? (localFollowersCount / 1000).toFixed(1) + 'k' : localFollowersCount}</span>
+          </div>
+        </div>
+        <div className="mentor-card__info-pro">
+          <div className="mentor-card__name-row">
+            <h3 className="mentor-card__name-pro">{name}</h3>
+            {verified && <span className="verified-badge-pro">✓</span>}
+          </div>
+          <div className="mentor-card__meta-pro">
+            <div className="mentor-card__subtitle-pro">
+              {role}{company && ` • ${company}`}
+            </div>
+          </div>
+        </div>
+      </div>
 
-          {/* Right: Info */}
-          <Box className="mentor-header-info">
-            <Box className="mentor-name-verified">
-              <Typography variant="h6" className="mentor-name-heading">
-                {name}
-              </Typography>
-              {verified && (
-                <FiCheckCircle className="verified-badge-icon" />
-              )}
-            </Box>
+      {/* Bio Section */}
+      <div className="mentor-card__body-pro">
+        <p className="mentor-card__bio-pro">{bio}</p>
+      </div>
 
-            <Typography variant="body2" className="mentor-role-title">
-              {role}
-              {company && ` • ${company}`}
-            </Typography>
-
-            <Typography variant="body2" className="mentor-exp-years">
-              {experience} experience
-            </Typography>
-
-            {/* Followers Count */}
-            <Typography variant="caption" className="mentor-followers-count">
-              {localFollowersCount} followers
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* Middle Section: Bio/Description */}
-        <Box className="mentor-description-section">
-          <Typography variant="body2" className="mentor-description-text">
-            {bio}
-          </Typography>
-        </Box>
-
-        {/* Bottom Section: Skills */}
-        <Box className="mentor-skills-section">
-          {skills.slice(0, 5).map((skill, idx) => (
-            <Chip
-              key={idx}
-              label={skill}
-              className="skill-tag-chip"
-              size="small"
-            />
-          ))}
-          {skills.length > 5 && (
-            <Chip
-              label={`+${skills.length - 5} more`}
-              className="skill-tag-chip skill-tag-more"
-              size="small"
-            />
-          )}
-        </Box>
-
-        {/* Core Domain (Optional) */}
-        {coreDomain && (
-          <Box className="mentor-core-domain">
-            <Typography variant="caption" className="core-domain-heading">
-              Core Domains:
-            </Typography>
-            <Typography variant="body2" className="core-domain-text">
-              {coreDomain}
-            </Typography>
-          </Box>
+      {/* Skills Section */}
+      <div className="mentor-card__skills-pro">
+        {displaySkills.map((skill, i) => (
+          <span key={i} className="mentor-tag-pro">
+            {skill}
+          </span>
+        ))}
+        {remainingSkills > 0 && (
+          <span className="mentor-tag-pro tag--more">+{remainingSkills}</span>
         )}
-      </CardContent>
+      </div>
 
       {/* Actions Section */}
-      <CardActions className="mentor-actions-section">
-        <Button
-          variant="contained"
-          fullWidth
-          size="large"
-          className="connect-action-btn"
-          startIcon={<FiLink2 />}
-          onClick={handleConnectClick}
-        >
-          Connect
-        </Button>
-        <Button
-          variant="contained"
-          fullWidth
-          size="large"
-          className={isFollowing ? "follow-action-btn following-active" : "follow-action-btn"}
-          startIcon={isFollowing ? <FiUserCheck /> : <FiUserPlus />}
-          onClick={handleFollowClick}
-          disabled={loading}
-        >
-          {loading ? 'Loading...' : isFollowing ? 'Following' : 'Follow'}
-        </Button>
-      </CardActions>
-    </Card>
+      <div className="mentor-card__footer-pro">
+        <div className="mentor-card__actions-pro">
+          <button
+            className="mentor-btn-pro mentor-btn-follow"
+            onClick={handleFollowClick}
+            disabled={loading}
+          >
+            {isFollowing ? <FiUserCheck /> : <FiUserPlus />}
+            <span>{loading ? '...' : isFollowing ? 'Following' : 'Follow'}</span>
+          </button>
+          <button className="mentor-btn-pro mentor-btn-connect" onClick={handleConnectClick}>
+            Connect
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

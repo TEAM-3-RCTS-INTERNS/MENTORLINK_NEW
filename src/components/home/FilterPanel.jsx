@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { FiChevronRight, FiFilter } from "react-icons/fi";
+import { useLayout } from "../../contexts/LayoutContext";
 import "./FilterPanel.css";
 
 const FilterPanel = ({ filters, setFilters, availableDomains = [], availableCompanies = [] }) => {
   const [domainSearch, setDomainSearch] = useState("");
   const [companySearch, setCompanySearch] = useState("");
+  const { filterCollapsed, toggleFilter } = useLayout();
 
   // Use provided domains/companies or fallback to defaults
   const allDomains = availableDomains.length > 0 ? availableDomains : [
@@ -43,8 +46,30 @@ const FilterPanel = ({ filters, setFilters, availableDomains = [], availableComp
     c.toLowerCase().includes(companySearch.toLowerCase())
   );
 
+  // Collapsed state - show only toggle button
+  if (filterCollapsed) {
+    return (
+      <button 
+        className="filter-panel__expand-btn"
+        onClick={toggleFilter}
+        title="Show filters"
+        aria-label="Show filters"
+      >
+        <FiFilter />
+      </button>
+    );
+  }
+
   return (
     <aside className="filter-panel">
+      <button 
+        className="filter-panel__toggle"
+        onClick={toggleFilter}
+        title="Hide filters"
+        aria-label="Hide filters"
+      >
+        <FiChevronRight />
+      </button>
       <div className="filter-panel__title">Filter by</div>
 
       <div className="filter-group">

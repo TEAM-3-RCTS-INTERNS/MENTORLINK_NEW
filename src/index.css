@@ -45,9 +45,17 @@ body.dark-mode {
 }
 
 /* Lightweight element fallbacks (components use variables directly) */
-body.dark-mode .home-navbar { background: var(--panel); }
-body.dark-mode .sidebar { background: var(--panel); }
-body.dark-mode .profile-page-container { background: var(--card-background); }
+body.dark-mode .home-navbar {
+  background: var(--panel);
+}
+
+body.dark-mode .sidebar {
+  background: var(--panel);
+}
+
+body.dark-mode .profile-page-container {
+  background: var(--card-background);
+}
 
 .container {
   max-width: 1200px;
@@ -58,7 +66,7 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
 /* Navbar */
 .navbar {
   background: white;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
   top: 0;
@@ -152,8 +160,16 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .hero-grid {
@@ -238,8 +254,13 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
 }
 
 @keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .about-card {
@@ -291,7 +312,7 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
   background: white;
   border-radius: 15px;
   padding: 40px 30px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .feature-icon {
@@ -368,8 +389,13 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
 }
 
 @keyframes scroll-testimonials {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .testimonial-card {
@@ -517,26 +543,128 @@ body.dark-mode .profile-page-container { background: var(--card-background); }
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cta-buttons-group {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .main-heading {
     font-size: 36px;
   }
-  
+
   .typing-text {
     font-size: 22px;
+  }
+}
+
+/* ==========================================
+   Shared Collapsible Sidebar Layout Utilities
+   ========================================== */
+
+/* App container - common layout wrapper */
+.app-container {
+  display: flex;
+  padding-top: 64px;
+  min-height: 100vh;
+}
+
+.app-container .main-content,
+.app-container .admin-content,
+.app-container .messages-main-content,
+.app-container .student-profile-main,
+.app-container .mentor-profile-main {
+  flex: 1;
+  margin-left: 260px;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar collapsed state for app-container */
+.app-container.sidebar-collapsed .main-content,
+.app-container.sidebar-collapsed .admin-content,
+.app-container.sidebar-collapsed .messages-main-content,
+.app-container.sidebar-collapsed .student-profile-main,
+.app-container.sidebar-collapsed .mentor-profile-main {
+  margin-left: 72px;
+}
+
+/* Events layout */
+.events-layout {
+  display: flex;
+  padding-top: 64px;
+  min-height: 100vh;
+}
+
+.events-layout .events-main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+}
+
+.events-layout.sidebar-collapsed .events-main-content {
+  margin-left: 72px;
+}
+
+/* Event info layout */
+.event-info-layout {
+  display: flex;
+  padding-top: 64px;
+  min-height: 100vh;
+}
+
+.event-info-layout .event-info-container,
+.event-info-layout .event-info-main {
+  flex: 1;
+  margin-left: 260px;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+}
+
+.event-info-layout.sidebar-collapsed .event-info-container,
+.event-info-layout.sidebar-collapsed .event-info-main {
+  margin-left: 72px;
+}
+
+/* Settings layout (flex min-h-screen) */
+.flex.min-h-screen {
+  display: flex;
+  padding-top: 64px;
+  min-height: 100vh;
+}
+
+.flex.min-h-screen .main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 24px;
+  transition: margin-left 0.3s ease;
+}
+
+.flex.min-h-screen.sidebar-collapsed .main-content {
+  margin-left: 72px;
+}
+
+/* Responsive - Mobile sidebar always collapsed */
+@media (max-width: 768px) {
+  .app-container .main-content,
+  .app-container .admin-content,
+  .app-container .messages-main-content,
+  .app-container .student-profile-main,
+  .app-container .mentor-profile-main,
+  .events-layout .events-main-content,
+  .event-info-layout .event-info-container,
+  .event-info-layout .event-info-main,
+  .flex.min-h-screen .main-content {
+    margin-left: 72px;
   }
 }

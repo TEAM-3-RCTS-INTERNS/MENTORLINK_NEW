@@ -35,60 +35,67 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.modal-header-enhanced {
+.session-history-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 32px;
-  border-bottom: 2px solid #e1e4e8;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 24px 32px;
+  background: linear-gradient(135deg, #0a66c2 0%, #004c99 100%);
   border-radius: 20px 20px 0 0;
-}
-
-.modal-header-content {
-  display: flex;
-  align-items: center;
-}
-
-.modal-header-content h2 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-.mentee-subtitle {
-  margin: 4px 0 0 0;
-  font-size: 14px;
-  color: #666;
-  font-weight: 500;
-}
-
-.modal-close-btn-enhanced {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: white;
-  border: 2px solid #e1e4e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #666;
-}
-
-.modal-close-btn-enhanced:hover {
-  background: #ef4444;
-  border-color: #ef4444;
   color: white;
-  transform: rotate(90deg);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 32px !important;
+  color: white;
+}
+
+.session-history-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+}
+
+.session-history-header p {
+  margin: 2px 0 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+  color: white;
+}
+
+.session-history-back-btn {
+  padding: 8px 20px;
+  background: white;
+  border: 2px solid #f59e0b;
+  border-radius: 30px;
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.session-history-back-btn:hover {
+  background: #f59e0b;
+  color: white;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
 .session-history-content-enhanced {
@@ -194,6 +201,10 @@
 }
 
 .session-date-time svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  flex-shrink: 0;
   color: var(--primary-orange, #FF8C42);
 }
 
@@ -241,6 +252,10 @@
 }
 
 .session-detail-item svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  flex-shrink: 0;
   color: var(--gray-400, #9CA3AF);
 }
 
@@ -346,60 +361,73 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border: 2px solid #e1e4e8;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #f59e0b;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
-  border-color: #0066cc;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #0a66c2;
 }
 
 .stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 24px;
+  font-size: 20px;
+  flex-shrink: 0;
 }
 
 .stat-icon.total {
-  background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+  background: #0a66c2;
 }
 
 .stat-icon.completed {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #10b981;
 }
 
 .stat-icon.upcoming {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  background: #f59e0b;
 }
 
 .stat-icon.cancelled {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: #ef4444;
 }
 
 .stat-value {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  color: #1a1a1a;
-  line-height: 1;
-  margin-bottom: 4px;
+  color: #0a66c2;
+  line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #666;
+  color: #64748b;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.025em;
 }
 
 /* Filters Section */
@@ -427,7 +455,7 @@
 }
 
 .search-bar:focus-within {
-  border-color: #0066cc;
+  border-color: #0a66c2;
   box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
 }
 
@@ -465,14 +493,14 @@
 }
 
 .filter-btn:hover {
-  border-color: #0066cc;
-  color: #0066cc;
+  border-color: #0a66c2;
+  color: #0a66c2;
   background: rgba(0, 102, 204, 0.05);
 }
 
 .filter-btn.active {
-  background: #0066cc;
-  border-color: #0066cc;
+  background: #0a66c2;
+  border-color: #0a66c2;
   color: white;
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
 }
@@ -489,7 +517,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #0066cc 0%, #e1e4e8 100%);
+  background: linear-gradient(to bottom, #0a66c2 0%, #e1e4e8 100%);
   border-radius: 3px;
 }
 
@@ -506,12 +534,12 @@
   height: 36px;
   border-radius: 50%;
   background: white;
-  border: 3px solid #0066cc;
+  border: 3px solid #0a66c2;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  color: #0066cc;
+  color: #0a66c2;
   box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
 }
 
@@ -539,7 +567,7 @@
 }
 
 .session-card-content:hover {
-  border-color: #0066cc;
+  border-color: #0a66c2;
   box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
   transform: translateY(-2px);
 }
@@ -580,7 +608,7 @@
 
 .status-badge-new.status-scheduled {
   background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, rgba(0, 102, 204, 0.1) 100%);
-  color: #0066cc;
+  color: #0a66c2;
 }
 
 .status-badge-new.status-completed {
@@ -643,6 +671,7 @@
 }
 
 @media (max-width: 480px) {
+
   .session-history-modal,
   .session-history-modal-enhanced {
     width: 100%;
@@ -681,4 +710,96 @@
     align-items: flex-start;
     gap: 12px;
   }
+}
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode .session-history-modal,
+body.dark-mode .session-history-modal-enhanced {
+  background: #1e293b;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .session-history-content,
+body.dark-mode .session-history-content-enhanced {
+  background: #1e293b;
+}
+
+body.dark-mode .loading-state p {
+  color: #94a3b8;
+}
+
+body.dark-mode .spinner {
+  border-color: #334155;
+  border-top-color: #ff914d;
+}
+
+body.dark-mode .empty-state svg {
+  color: #4b5563;
+}
+
+body.dark-mode .empty-text {
+  color: #f1f5f9;
+}
+
+body.dark-mode .empty-subtext {
+  color: #94a3b8;
+}
+
+body.dark-mode .session-card {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .session-card:hover {
+  border-color: #ff914d;
+  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.2);
+}
+
+body.dark-mode .session-date-time {
+  color: #f1f5f9;
+}
+
+body.dark-mode .session-info-item {
+  color: #94a3b8;
+}
+
+body.dark-mode .session-info-item svg {
+  stroke: currentColor;
+}
+
+body.dark-mode .session-stats-grid {
+  border-color: #334155;
+}
+
+body.dark-mode .stat-item {
+  color: #94a3b8;
+}
+
+body.dark-mode .stat-value {
+  color: #f1f5f9;
+}
+
+body.dark-mode .sessions-timeline .timeline-item {
+  border-left-color: #334155;
+}
+
+body.dark-mode .timeline-marker {
+  background: #334155;
+  border-color: #1e293b;
+}
+
+body.dark-mode .timeline-content {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .session-history-back-btn {
+  background: #1e293b;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+body.dark-mode .session-history-back-btn:hover {
+  background: #f59e0b;
+  color: white;
 }

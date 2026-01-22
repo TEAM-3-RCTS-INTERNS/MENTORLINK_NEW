@@ -7,8 +7,10 @@ const {
   deleteMessage,
   getUnreadCount,
   searchMessages,
+  uploadAttachment,
 } = require('../controllers/messageController');
 const { protect } = require('../middleware/auth');
+const { upload, uploadToCloudinary } = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -18,6 +20,10 @@ router.use(protect);
 // @route   POST /api/messages
 // @desc    Send a new message
 router.post('/', sendMessage);
+
+// @route   POST /api/messages/upload
+// @desc    Upload file/image for chat
+router.post('/upload', upload.single('file'), uploadToCloudinary, uploadAttachment);
 
 // @route   GET /api/messages/conversations
 // @desc    Get all conversations

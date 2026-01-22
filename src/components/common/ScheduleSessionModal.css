@@ -162,6 +162,9 @@
 .input-with-icon svg {
   position: absolute;
   left: 12px;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
   color: var(--gray-400, #9CA3AF);
   pointer-events: none;
 }
@@ -266,4 +269,89 @@
   .send-invite-btn {
     width: 100%;
   }
+}
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .schedule-modal {
+  background: #1e293b;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .modal-header {
+  border-bottom-color: #334155;
+}
+
+body.dark-mode .modal-header h2 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .modal-close-btn {
+  color: #94a3b8;
+}
+
+body.dark-mode .modal-close-btn:hover {
+  background: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .mentee-info-section {
+  background: linear-gradient(135deg, rgba(255, 140, 66, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+}
+
+body.dark-mode .mentee-name {
+  color: #f1f5f9;
+}
+
+body.dark-mode .mentee-email {
+  color: #94a3b8;
+}
+
+body.dark-mode .form-group label {
+  color: #e2e8f0;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .form-group input::placeholder,
+body.dark-mode .form-group textarea::placeholder {
+  color: #64748b;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus,
+body.dark-mode .form-group textarea:focus {
+  border-color: #ff914d;
+  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.15);
+}
+
+body.dark-mode .input-with-icon svg {
+  color: #64748b;
+}
+
+body.dark-mode .zoom-section {
+  border-top-color: #334155;
+}
+
+body.dark-mode .zoom-section h3 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .cancel-btn {
+  background: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+body.dark-mode .cancel-btn:hover {
+  background: #475569;
 }

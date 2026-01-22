@@ -112,9 +112,11 @@
 }
 
 .theme-toggle-square svg {
-  font-size: 20px;
+  width: 20px;
+  height: 20px;
   color: #000000;
   stroke: #000000;
+  flex-shrink: 0;
 }
 
 /* ==================== DARK MODE ==================== */

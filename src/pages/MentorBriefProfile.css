@@ -1,783 +1,535 @@
-/* MentorBriefProfile.css - Single Column Layout */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* ============================================
+   MENTOR BRIEF PROFILE - UNIFIED DESIGN
+   Single Container | Clean | Professional
+   ============================================ */
 
 .mentor-brief-profile-page {
-  font-family: 'Inter', sans-serif;
-  background: #f5f7fa;
-  min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f4f2ee;
+    min-height: 100vh;
 }
 
 .mentor-brief-profile-page .app-container {
-  display: flex;
-  min-height: calc(100vh - 64px);
-  padding-top: 80px;
+    display: flex;
+    min-height: calc(100vh - 64px);
+    padding-top: 64px;
 }
 
 .mentor-brief-profile-page .main-content {
-  flex: 1;
-  margin-left: 280px;
-  padding: 0;
-  transition: margin 0.3s ease;
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin 0.3s ease;
 }
 
-/* Single Column Container */
-.single-column-container {
-  max-width: 100%;
-  margin: 0 auto;
+.mentor-brief-profile-page .app-container.sidebar-collapsed .main-content {
+    margin-left: 70px;
 }
 
-/* ========================================
-   PROFILE BANNER SECTION
-======================================== */
-.profile-banner-section {
-  position: relative;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 40px;
+/* Loading & Error States */
+.loading-container,
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    background: white;
+    border-radius: 8px;
 }
 
-.banner-background {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-  border-radius: 0;
+.loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #eee;
+    border-top-color: #FF6B35;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
 }
 
-.profile-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px 40px;
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  position: relative;
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================
+   SINGLE PROFILE CONTAINER
+   ============================================ */
+.profile-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    overflow: visible;
 }
 
-/* Profile Header Left */
-.profile-header-left {
-  display: flex;
-  gap: 30px;
-  flex: 1;
+/* ============================================
+   BANNER - Full width at top
+   ============================================ */
+.profile-banner {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px 8px 0 0;
 }
 
-.profile-avatar-large {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 6px solid white;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  margin-top: -90px;
-  flex-shrink: 0;
-}
-
+/* ============================================
+   PROFILE INFO - Avatar (left) + Identity (middle) + About (right)
+   ============================================ */
 .profile-info {
-  flex: 1;
-  padding-top: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eee;
 }
 
-.profile-name {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 4px 0;
-  line-height: 1.2;
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    object-fit: cover;
+    background: #e8f4f8;
+    flex-shrink: 0;
+    margin-top: -50px;
+    position: relative;
+    z-index: 10;
 }
 
-.profile-handle {
-  font-size: 16px;
-  color: #6b7280;
-  margin: 0 0 20px 0;
+.profile-identity {
+    flex: 0 0 auto;
+    min-width: 200px;
 }
 
-.profile-role-bio {
-  margin-bottom: 20px;
+.profile-identity h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+    line-height: 1.2;
 }
 
-.role-text {
-  font-size: 15px;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 8px 0;
+.profile-identity .username {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 4px;
 }
 
-.bio-text {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #6b7280;
-  margin: 0;
-  max-width: 600px;
+.profile-identity .domain {
+    font-size: 14px;
+    color: #FF6B35;
+    font-weight: 500;
+    margin: 0 0 6px;
 }
 
-/* Action Buttons */
+.profile-identity .stats {
+    font-size: 13px;
+    color: #22c55e;
+    margin: 0;
+}
+
+/* About - Right side of profile info */
+.profile-about {
+    flex: 1;
+    padding-left: 24px;
+    border-left: 1px solid #eee;
+}
+
+.profile-about h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 6px;
+}
+
+.profile-about p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ============================================
+   PROFILE BODY - Details
+   ============================================ */
+.profile-body {
+    padding: 16px 24px;
+}
+
+/* Details Section */
+.details-section {
+    padding: 0;
+}
+
+.details-section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 14px;
+}
+
+/* Two Column Grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) minmax(200px, 1fr);
+    gap: 20px 40px;
+    max-width: 700px;
+}
+
+.col-left,
+.col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-row label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.detail-row span {
+    font-size: 14px;
+    color: #1a1a1a;
+}
+
+.detail-row a {
+    font-size: 13px;
+    color: #22c55e;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.detail-row a:hover {
+    text-decoration: underline;
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tags span {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #333;
+}
+
+/* ============================================
+   ACTION BUTTONS - At Bottom
+   ============================================ */
+.mentoring-cta {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.mentoring-cta strong {
+    color: #FF6B35;
+}
+
+.profile-actions-wrapper {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
 .profile-actions {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
 }
 
-.connection-btn {
-  padding: 12px 28px;
-  background: #ff8c42;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(255, 140, 66, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.btn-follow,
+.btn-connect,
+.btn-message {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 2px solid;
 }
 
-.connection-btn:hover {
-  background: #ff6b35;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.4);
+.btn-follow {
+    background: white;
+    color: #333;
+    border-color: #333;
 }
 
-.connection-btn svg {
-  flex-shrink: 0;
+.btn-follow:hover {
+    background: #f5f5f5;
 }
 
-.follow-btn {
-  padding: 12px 28px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.btn-follow.following {
+    background: #f0f0f0;
+    color: #666;
+    border-color: #ccc;
 }
 
-.follow-btn:hover {
-  background: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+.btn-connect {
+    background: #FF6B35;
+    color: white;
+    border-color: #FF6B35;
 }
 
-.follow-btn.following {
-  background: #6b7280;
+.btn-connect:hover {
+    background: #e55a2b;
+    border-color: #e55a2b;
 }
 
-.follow-btn.following:hover {
-  background: #4b5563;
+.btn-connect.connected {
+    background: #22c55e;
+    border-color: #22c55e;
+    cursor: default;
 }
 
-.follow-btn svg {
-  flex-shrink: 0;
+.btn-connect.pending {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    cursor: default;
 }
 
-/* Profile Stats */
-.profile-stats {
-  display: flex;
-  gap: 24px;
+.btn-message {
+    background: white;
+    color: #FF6B35;
+    border-color: #FF6B35;
 }
 
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  background: #f9fafb;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+.btn-message:hover {
+    background: #fff5f2;
 }
 
-.stat-icon {
-  font-size: 24px;
-  line-height: 1;
-}
-
-.stat-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Profile Header Right */
-.profile-header-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
-  padding-top: 20px;
-}
-
-.experience-badge {
-  padding: 12px 24px;
-  background: #ecfdf5;
-  border: 2px solid #10b981;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #10b981;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.social-links {
-  display: flex;
-  gap: 12px;
-}
-
-.social-link {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.social-link:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
-  transform: translateY(-2px);
-}
-
-.social-link svg {
-  color: #6b7280;
-}
-
-/* ========================================
-   MENTOR DETAILS SECTION
-======================================== */
-.mentor-details-section {
-  max-width: 1200px;
-  margin: 0 auto 40px;
-  padding: 0 40px;
-}
-
-.details-heading {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 20px 0;
-}
-
-.details-description {
-  margin-bottom: 32px;
-}
-
-.details-description p {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin: 0 0 12px 0;
-  line-height: 1.6;
-}
-
-.mentorship-achievement {
-  color: #6b7280 !important;
-  font-weight: 500 !important;
-}
-
-/* Details Cards Grid */
-.details-cards-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-.detail-card {
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.detail-card h3 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 16px 0;
-}
-
-.availability-options,
-.mentoring-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.availability-option,
-.mentoring-option {
-  padding: 12px 20px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  text-align: center;
-}
-
-/* Skills Section */
-.skills-section {
-  margin-top: 32px;
-}
-
-.skills-section h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 16px 0;
-}
-
-.skills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.skill-badge {
-  padding: 8px 16px;
-  background: #eff6ff;
-  color: #3b82f6;
-  border: 1px solid #bfdbfe;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* ========================================
-   CONNECTION MODAL
-======================================== */
+/* ============================================
+   MODAL STYLES
+   ============================================ */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-  backdrop-filter: blur(4px);
-  padding: 20px;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
 }
 
 .connection-modal {
-  background: white;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: modalSlideIn 0.3s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    background: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 16px 32px rgba(0,0,0,0.15);
 }
 
 .modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 32px;
-  border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
 }
 
 .modal-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
 }
 
 .close-modal-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .close-modal-btn:hover {
-  background: #f3f4f6;
-}
-
-.close-modal-btn svg {
-  color: #6b7280;
+    background: #eee;
 }
 
 .connection-modal-form {
-  padding: 32px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
-/* Modal Form Groups */
 .modal-form-group {
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .modal-form-group label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
 }
 
-.modal-form-group input[type="text"],
-.modal-form-group input[type="email"],
-.modal-form-group input[type="tel"],
-.modal-form-group input[type="url"],
-.modal-form-group textarea,
-.modal-form-group select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
-  font-size: 14px;
-  font-family: inherit;
-  background: white;
-  color: #111827;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.modal-form-group input::placeholder,
-.modal-form-group textarea::placeholder {
-  color: #9ca3af;
+.modal-form-group input,
+.modal-form-group select,
+.modal-form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
 }
 
 .modal-form-group input:focus,
-.modal-form-group textarea:focus,
-.modal-form-group select:focus {
-  outline: none;
-  border-color: #ff8c42;
-  box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
+.modal-form-group select:focus,
+.modal-form-group textarea:focus {
+    outline: none;
+    border-color: #FF6B35;
 }
 
-.modal-form-group textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-
-.modal-form-group select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23374151' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
-}
-
-/* Two-Column Form Row */
 .modal-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.modal-form-row .modal-form-group {
-  margin-bottom: 0;
-}
-
-/* Modal Checkbox Group */
-.modal-checkbox-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .modal-checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  padding: 10px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
 }
 
-.modal-checkbox-label:hover {
-  background: #f9fafb;
+.modal-checkbox-label input {
+    width: 16px;
+    height: 16px;
+    accent-color: #FF6B35;
 }
 
-.modal-checkbox-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: #ff8c42;
-}
-
-.modal-checkbox-label.terms-checkbox {
-  grid-column: 1 / -1;
-  background: #fef3f2;
-  border: 1px solid #fecaca;
-  padding: 12px;
-}
-
-.modal-checkbox-label span {
-  user-select: none;
-}
-
-/* Modal Actions */
 .modal-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+}
+
+.cancel-modal-btn,
+.submit-modal-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
 }
 
 .cancel-modal-btn {
-  flex: 1;
-  padding: 14px 24px;
-  background: white;
-  color: #6b7280;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    background: #f5f5f5;
+    color: #555;
 }
 
 .cancel-modal-btn:hover {
-  background: #f9fafb;
-  border-color: #d1d5db;
+    background: #eee;
 }
 
 .submit-modal-btn {
-  flex: 2;
-  padding: 14px 24px;
-  background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);
+    background: #FF6B35;
+    color: white;
 }
 
-.submit-modal-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
+.submit-modal-btn:hover {
+    background: #e55a2b;
 }
 
 .submit-modal-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
+    background: #ccc;
+    cursor: not-allowed;
 }
 
-/* Loading and Error States */
-.loading-spinner,
-.error-message {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 18px;
-  color: #6b7280;
-}
-
-.error-message {
-  color: #ef4444;
-}
-
-/* ========================================
-   RESPONSIVE DESIGN
-======================================== */
-@media (max-width: 1024px) {
-  .mentor-brief-profile-page .main-content {
-    margin-left: 0;
-  }
-
-  .profile-content,
-  .mentor-details-section,
-  .connection-form-section {
-    padding: 0 24px;
-  }
-
-  .profile-content {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .profile-header-left {
-    flex-direction: column;
-  }
-
-  .profile-avatar-large {
-    margin-top: -60px;
-    width: 140px;
-    height: 140px;
-  }
-
-  .profile-header-right {
-    align-items: flex-start;
-  }
-
-  .details-cards-grid {
-    grid-template-columns: 1fr;
-  }
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+    .profile-info {
+        flex-wrap: wrap;
+    }
+    
+    .profile-about {
+        flex-basis: 100%;
+        border-left: none;
+        border-top: 1px solid #eee;
+        padding-left: 0;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
 }
 
 @media (max-width: 768px) {
-  .mentor-brief-profile-page .app-container {
-    padding-top: 60px;
-  }
-
-  .banner-background {
-    height: 150px;
-  }
-
-  .profile-avatar-large {
-    width: 120px;
-    height: 120px;
-    margin-top: -50px;
-  }
-
-  .profile-name {
-    font-size: 24px;
-  }
-
-  .profile-stats {
-    flex-wrap: wrap;
-  }
-
-  .details-heading {
-    font-size: 22px;
-  }
-
-  .connection-form {
-    padding: 30px 24px;
-    border-radius: 20px;
-  }
-
-  .form-title {
-    font-size: 24px;
-  }
-
-  .checkbox-group {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-content,
-  .mentor-details-section {
-    padding: 0 16px;
-  }
-
-  .profile-avatar-large {
-    width: 100px;
-    height: 100px;
-  }
-
-  .profile-name {
-    font-size: 20px;
-  }
-
-  .profile-actions {
-    flex-direction: column;
-  }
-
-  .connection-btn,
-  .follow-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .stat-item {
-    padding: 10px 16px;
-  }
-
-  .stat-value {
-    font-size: 16px;
-  }
-
-  .modal-overlay {
-    padding: 10px;
-  }
-
-  .connection-modal {
-    max-height: 95vh;
-  }
-
-  .modal-header {
-    padding: 20px;
-  }
-
-  .connection-modal-form {
-    padding: 20px;
-  }
-
-  .modal-checkbox-group {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-form-row {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .modal-form-row .modal-form-group {
-    margin-bottom: 20px;
-  }
-
-  .modal-actions {
-    flex-direction: column;
-  }
-
-  .cancel-modal-btn,
-  .submit-modal-btn {
-    width: 100%;
-  }
+    .mentor-brief-profile-page .main-content {
+        margin-left: 0;
+        padding: 12px;
+    }
+    
+    .profile-info {
+        flex-wrap: wrap;
+        padding: 16px;
+    }
+    
+    .profile-avatar {
+        margin-top: -40px;
+    }
+    
+    .profile-identity {
+        flex: 1;
+        min-width: 150px;
+    }
+    
+    .profile-about {
+        flex-basis: 100%;
+        border-left: none;
+        border-top: 1px solid #eee;
+        padding-left: 0;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+    
+    .profile-body {
+        padding: 16px;
+    }
+    
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .profile-actions {
+        flex-wrap: wrap;
+    }
+    
+    .modal-form-row {
+        grid-template-columns: 1fr;
+    }
 }

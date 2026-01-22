@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import HomeNavbar from '../components/common/HomeNavbar';
 import Sidebar from '../components/home/Sidebar';
+import { useLayout } from '../contexts/LayoutContext';
 import './RequestReview.css';
 
 const RequestReview = () => {
   const { requestId } = useParams();
   const navigate = useNavigate();
+  const { sidebarCollapsed } = useLayout();
 
   const [request, setRequest] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -96,7 +98,7 @@ const RequestReview = () => {
     return (
       <div className="request-review-page">
         <HomeNavbar />
-        <div className="app-container">
+        <div className={`app-container${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
           <Sidebar />
           <div className="main-content">
             <div className="loading-spinner">Loading request details...</div>
@@ -110,7 +112,7 @@ const RequestReview = () => {
     return (
       <div className="request-review-page">
         <HomeNavbar />
-        <div className="app-container">
+        <div className={`app-container${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
           <Sidebar />
           <div className="main-content">
             <div className="error-message">Request not found</div>
@@ -123,7 +125,7 @@ const RequestReview = () => {
   return (
     <div className="request-review-page">
       <HomeNavbar />
-      <div className="app-container">
+      <div className={`app-container${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
         <Sidebar />
         <div className="main-content">
           <div className="request-review-container">

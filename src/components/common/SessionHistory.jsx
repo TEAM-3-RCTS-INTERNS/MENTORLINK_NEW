@@ -136,23 +136,20 @@ const SessionHistory = ({ isOpen, onClose, mentee }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="session-history-modal-enhanced" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header-enhanced">
-          <div className="modal-header-content">
-            <BarChartIcon sx={{ fontSize: 28, color: '#0066cc', marginRight: '12px' }} />
+        <div className="session-history-header">
+          <div className="header-left">
+            <BarChartIcon className="header-icon" />
             <div>
               <h2>Session History</h2>
-              {mentee && (
-                <p className="mentee-subtitle">
-                  with {mentee.user?.name || mentee.name}
-                </p>
-              )}
+              <p>with {mentee.user?.name || mentee.name}</p>
             </div>
           </div>
-          <button className="modal-close-btn-enhanced" onClick={onClose}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+
+          <button
+            className="session-history-back-btn"
+            onClick={onClose}
+          >
+            ← Back
           </button>
         </div>
 
@@ -283,8 +280,8 @@ const SessionHistory = ({ isOpen, onClose, mentee }) => {
                   <div className="timeline-marker" data-status={session.status}>
                     {session.status === 'completed' ? <CheckCircleIcon /> :
                       session.status === 'cancelled' ? <CancelIcon /> :
-                      session.status === 'scheduled' ? <EventIcon /> :
-                      <HourglassEmptyIcon />}
+                        session.status === 'scheduled' ? <EventIcon /> :
+                          <HourglassEmptyIcon />}
                   </div>
                   <div className="session-card-content">
                     <div className="session-header-timeline">
@@ -297,51 +294,51 @@ const SessionHistory = ({ isOpen, onClose, mentee }) => {
                       {getStatusBadge(session.status)}
                     </div>
 
-                  <div className="session-details">
-                    <div className="session-detail-item">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                        <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                      </svg>
-                      <span>{session.duration} minutes</span>
-                    </div>
-
-                    {session.timezone && (
+                    <div className="session-details">
                       <div className="session-detail-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                          <path d="M12 2C8 2 8 6 8 6C8 6 8 10 12 10C16 10 16 6 16 6C16 6 16 2 12 2Z" stroke="currentColor" strokeWidth="2"/>
+                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                          <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
-                        <span>{session.timezone}</span>
+                        <span>{session.duration} minutes</span>
                       </div>
-                    )}
-                  </div>
 
-                  {session.zoomLink && session.status === 'scheduled' && (
-                    <div className="session-zoom">
-                      <a
-                        href={session.zoomLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="zoom-link-btn"
-                      >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8zm18 0H4v8h16V8z"/>
-                        </svg>
-                        Join Zoom Meeting
-                      </a>
-                      {session.password && (
-                        <p className="zoom-password">Password: {session.password}</p>
+                      {session.timezone && (
+                        <div className="session-detail-item">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                            <path d="M12 2C8 2 8 6 8 6C8 6 8 10 12 10C16 10 16 6 16 6C16 6 16 2 12 2Z" stroke="currentColor" strokeWidth="2" />
+                          </svg>
+                          <span>{session.timezone}</span>
+                        </div>
                       )}
                     </div>
-                  )}
 
-                  {session.notes && (
-                    <div className="session-notes">
-                      <p className="notes-label">Notes:</p>
-                      <p className="notes-text">{session.notes}</p>
-                    </div>
-                  )}
+                    {session.zoomLink && session.status === 'scheduled' && (
+                      <div className="session-zoom">
+                        <a
+                          href={session.zoomLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="zoom-link-btn"
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8zm18 0H4v8h16V8z" />
+                          </svg>
+                          Join Zoom Meeting
+                        </a>
+                        {session.password && (
+                          <p className="zoom-password">Password: {session.password}</p>
+                        )}
+                      </div>
+                    )}
+
+                    {session.notes && (
+                      <div className="session-notes">
+                        <p className="notes-label">Notes:</p>
+                        <p className="notes-text">{session.notes}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

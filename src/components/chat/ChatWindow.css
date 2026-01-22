@@ -17,6 +17,8 @@
 }
 
 .no-conversation-state svg {
+  width: 64px;
+  height: 64px;
   color: #d1d5db;
   margin-bottom: 20px;
 }
@@ -67,6 +69,8 @@
 }
 
 .no-messages-state svg {
+  width: 48px;
+  height: 48px;
   color: #d1d5db;
   margin-bottom: 16px;
 }
@@ -157,4 +161,51 @@
   .chat-window {
     width: 100%;
   }
+}
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode .chat-window {
+  background: #0f172a;
+}
+
+body.dark-mode .no-conversation-state svg {
+  color: #4b5563;
+}
+
+body.dark-mode .no-conversation-state h3 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .no-conversation-state p {
+  color: #94a3b8;
+}
+
+body.dark-mode .loading-messages .spinner {
+  border-color: #334155;
+  border-top-color: #ff914d;
+}
+
+body.dark-mode .loading-messages p {
+  color: #94a3b8;
+}
+
+body.dark-mode .no-messages-state svg {
+  color: #4b5563;
+}
+
+body.dark-mode .no-messages-state p {
+  color: #f1f5f9;
+}
+
+body.dark-mode .no-messages-state .subtext {
+  color: #94a3b8;
+}
+
+body.dark-mode .typing-bubble {
+  background: #1e293b;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .typing-dots span {
+  background: #64748b;
 }

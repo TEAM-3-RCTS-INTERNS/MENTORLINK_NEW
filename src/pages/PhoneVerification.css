@@ -180,3 +180,56 @@
     padding: 2.5rem 1.5rem;
   }
 }
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode .verification-page {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+body.dark-mode .verification-card {
+  background: rgba(31, 41, 55, 0.9);
+  border-color: rgba(75, 85, 99, 0.3);
+}
+
+body.dark-mode .illustration-section {
+  background: rgba(17, 24, 39, 0.9);
+}
+
+body.dark-mode .form-section {
+  background: #1e293b;
+}
+
+body.dark-mode .welcome-text {
+  color: #f1f5f9;
+}
+
+body.dark-mode .welcome-subtext {
+  color: #94a3b8;
+}
+
+body.dark-mode .login-input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .login-input::placeholder {
+  color: #64748b;
+}
+
+body.dark-mode .login-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+body.dark-mode .signup-text {
+  color: #94a3b8;
+}
+
+body.dark-mode .signup-text a {
+  color: #60a5fa;
+}
+
+body.dark-mode .signup-text a:hover {
+  color: #93c5fd;
+}

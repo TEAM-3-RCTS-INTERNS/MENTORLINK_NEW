@@ -153,6 +153,11 @@ export const userAPI = {
       return response.json();
     });
   },
+
+  deleteAccount: (reason) => apiRequestSafe('/users/account', {
+    method: 'DELETE',
+    body: JSON.stringify({ reason }),
+  }),
 };
 
 // Mentor API functions
@@ -239,6 +244,24 @@ export const studentAPI = {
       });
       if (!response.ok) {
         throw new Error('Upload failed');
+      }
+      return response.json();
+    });
+  },
+
+  uploadBanner: (formData) => {
+    const token = getAuthToken();
+    return withRetry(async () => {
+      await waitForBackendReady(4000);
+      const response = await fetch(`${API_BASE_URL}/students/upload-banner`, {
+        method: 'POST',
+        headers: {
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error('Banner upload failed');
       }
       return response.json();
     });
@@ -410,6 +433,27 @@ export const chatAPI = {
     method: 'POST',
     body: JSON.stringify(data),
   }),
+
+  uploadAttachment: async (file) => {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await fetch(`${API_BASE_URL}/messages/upload`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Upload failed');
+    }
+    
+    return response.json();
+  },
 
   getConversations: () => apiRequestSafe('/messages/conversations'),
 

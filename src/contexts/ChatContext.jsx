@@ -160,12 +160,13 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   // Send a message
-  const sendMessage = useCallback(async (recipientId, content, messageType = 'text') => {
+  const sendMessage = useCallback(async (recipientId, content, messageType = 'text', attachments = []) => {
     try {
       const data = await chatAPI.sendMessage({
         recipientId,
         content,
         messageType,
+        attachments,
       });
 
       // Emit socket event

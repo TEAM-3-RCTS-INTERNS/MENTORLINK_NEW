@@ -1,12 +1,22 @@
 /* ==========================================
-   Professional Mentor Profile - Modern Design
+   Professional Mentor Profile - LinkedIn Style
    ========================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ==================== CSS Variables ==================== */
 :root {
-  /* Primary Colors */
+  /* LinkedIn-Style Colors */
+  --bg: #f4f2ee;
+  --surface: #ffffff;
+  --text-primary: #191919;
+  --text-secondary: #666666;
+  --text-muted: #00000099;
+  --border: #e0e0e0;
+  --accent: #0a66c2;
+  --accent-hover: #004182;
+
+  /* Legacy Primary Colors (keep for compatibility) */
   --primary-blue: #0066cc;
   --primary-blue-dark: #004c99;
   --primary-blue-light: #3399ff;
@@ -16,14 +26,9 @@
   --secondary-purple-light: #9b7bb7;
 
   /* Neutral Colors */
-  --bg-primary: #f5f7fa;
+  --bg-primary: #f4f2ee;
   --bg-white: #ffffff;
   --bg-gray-light: #fafbfc;
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
-  --text-muted: #999999;
-  --border-light: #e1e4e8;
-  --border-medium: #d1d5da;
 
   /* Status Colors */
   --success-green: #10b981;
@@ -63,51 +68,73 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg-primary);
+  background: var(--bg);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ==================== Main Layout ==================== */
+/* ==================== Main Layout - LinkedIn Style ==================== */
 .mentor-profile-page {
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: var(--bg);
 }
 
 .app-container {
   display: flex;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px;
-  gap: 24px;
+  min-height: calc(100vh - 64px);
+  padding-top: 64px;
 }
 
+/* Main Profile Container - Anchored to sidebar, full-width surface */
+.mentor-profile-main {
+  flex: 1;
+  margin-left: 250px;
+  background: var(--surface);
+  min-height: 100%;
+  padding-bottom: 2rem;
+}
+
+/* Legacy support - redirect to new class */
 .main-content {
   flex: 1;
-  margin-left: 240px;
+  margin-left: 250px;
   min-height: calc(100vh - 80px);
 }
 
-.mentor-profile-container {
-  max-width: 1000px;
-  margin: 0 auto;
+/* ==================== Unified Profile Sections ==================== */
+
+/* Header Section (Banner + Profile Info) */
+.profile-header-section {
+  margin-top: 4rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Content Sections - Unified Surface with Separators */
+.profile-content-section {
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-content-section:last-child {
+  border-bottom: none;
+}
+
+.profile-content-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
 }
 
 /* ==================== Profile Header Card ==================== */
 .profile-header-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-xl);
+  background: var(--surface);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  margin-bottom: 32px;
-  border: 1px solid var(--border-light);
-  transition: box-shadow var(--transition-normal);
-}
-
-.profile-header-card:hover {
-  box-shadow: var(--shadow-lg);
+  /* Removed: border-radius, box-shadow, margin-bottom, border for continuous surface */
 }
 
 /* Cover Image */
@@ -149,15 +176,15 @@ body {
 
 /* Profile Header Content */
 .profile-header-content {
-  padding: 0 32px 32px;
+  padding: 0 2rem 1.5rem;
 }
 
 .profile-top-section {
   display: flex;
   align-items: flex-start;
-  gap: 32px;
+  gap: 24px;
   margin-top: -60px;
-  margin-bottom: 32px;
+  margin-bottom: 1.5rem;
   position: relative;
 }
 
@@ -169,61 +196,62 @@ body {
 }
 
 .profile-photo-large {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  border: 5px solid var(--bg-white);
-  background: var(--bg-white);
+  border: 4px solid var(--surface);
+  background: var(--surface);
   object-fit: cover;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform var(--transition-normal);
 }
 
 .profile-photo-wrapper:hover .profile-photo-large {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .photo-edit-badge {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: var(--primary-blue);
+  bottom: 8px;
+  right: 8px;
+  background: var(--accent);
   color: white;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all var(--transition-normal);
   opacity: 0;
 }
 
 .profile-photo-wrapper:hover .photo-edit-badge {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .photo-edit-badge:hover {
-  background: var(--primary-blue-dark);
+  background: var(--accent-hover);
 }
 
 /* Profile Name Section */
 .profile-name-section {
   flex: 1;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 
 .profile-name-large {
-  font-size: 32px;
+  margin-top: 15px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 10px;
+  margin-bottom: 6px;
   line-height: 1.2;
 }
 
@@ -234,48 +262,51 @@ body {
 }
 
 .profile-designation {
-  display: flex;
+  margin-top: 10px;
+  margin-left: 20px;
+  display: inline-flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--primary-blue);
-  background: rgba(0, 102, 204, 0.1);
-  padding: 4px 12px;
+  color: var(--accent);
+  background: rgba(10, 102, 194, 0.1);
+  padding: 3px 10px;
   border-radius: var(--radius-full);
   width: fit-content;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .profile-headline-large {
-  font-size: 18px;
+  margin-left: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 /* Profile Strength Indicator */
 .profile-strength-indicator {
   margin-left: auto;
-  padding-top: 60px;
+  padding-top: 50px;
 }
 
 .strength-badge-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  gap: 10px;
+  padding: 14px;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: all var(--transition-normal);
 }
 
 .strength-badge-container:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-blue);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent);
 }
 
 .strength-circle-wrapper {
@@ -287,7 +318,7 @@ body {
 }
 
 .strength-label-text {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -298,22 +329,25 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
   color: white;
   border-radius: var(--radius-full);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
@@ -321,12 +355,13 @@ body {
 
 /* Key Metrics Section */
 .key-metrics-section {
+  margin-top: 4rem;
   display: flex;
-  gap: 40px;
-  padding: 24px 0;
-  border-top: 1px solid var(--border-light);
-  border-bottom: 1px solid var(--border-light);
-  margin-bottom: 24px;
+  gap: 32px;
+  padding: 1.5rem 1.5rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
 }
 
 .metric-item {
@@ -342,11 +377,16 @@ body {
 }
 
 .metric-icon {
-  font-size: 32px;
+  font-size: 28px !important;
+  width: 28px !important;
+  height: 28px !important;
   color: var(--primary-blue);
   background: rgba(0, 102, 204, 0.1);
   padding: 12px;
   border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .metric-content {
@@ -463,6 +503,16 @@ body {
   color: var(--primary-blue);
   border: 2px solid var(--border-light);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon-action svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  flex-shrink: 0;
 }
 
 .btn-icon-action:hover {
@@ -474,23 +524,21 @@ body {
 
 /* ==================== Analytics Section ==================== */
 .analytics-section-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  /* Removed: border-radius, box-shadow, margin-bottom, border for continuous surface */
 }
 
 .section-title-main {
-  font-size: 22px;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--text-primary);
   display: flex;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 1rem;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .analytics-metrics-grid {
@@ -566,12 +614,10 @@ body {
 
 /* ==================== About Section ==================== */
 .about-section-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  /* Removed: border-radius, box-shadow, margin-bottom, border for continuous surface */
 }
 
 .about-content {
@@ -583,12 +629,10 @@ body {
 
 /* ==================== Skills Section ==================== */
 .skills-section-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  /* Removed: border-radius, box-shadow, margin-bottom, border for continuous surface */
 }
 
 .skills-chips-container {
@@ -635,12 +679,10 @@ body {
 
 /* ==================== Experience Section ==================== */
 .experience-section-card {
-  background: var(--bg-white);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  margin-bottom: 32px;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  /* Removed: border-radius, box-shadow, margin-bottom, border for continuous surface */
 }
 
 .experience-timeline {
@@ -1454,6 +1496,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1465,6 +1508,7 @@ body {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1963,21 +2007,71 @@ body.dark-mode .modal-close-btn:hover {
 }
 
 /* ==================== Print Styles ==================== */
-@media print {
-  .profile-action-buttons,
-  .btn-icon-action,
-  .cover-upload-overlay,
-  .photo-edit-badge,
-  .dashboard-tabs,
-  .requests-subtabs {
-    display: none !important;
+/* End print media query */
+
+
+/* ==================== Split Layout (2 Factor) ==================== */
+.split-layout {
+  display: flex;
+  gap: 3rem;
+  padding-right: 1rem;
+  /* Better balance */
+}
+
+.header-left-column {
+  flex: 1;
+  min-width: 0;
+  /* Prevent flex overflow */
+}
+
+.header-right-column {
+  width: 340px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* Visual separation */
+  border-left: 1px solid var(--border);
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+.header-info-block h3 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Compact Tags for Side Column */
+.header-info-block .skill-chip,
+.header-info-block .preference-tag {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+}
+
+.header-info-block .skills-chips-container,
+.header-info-block .preference-tags-container {
+  gap: 6px;
+}
+
+/* Mobile Responsiveness for Split Layout */
+@media (max-width: 1024px) {
+  .split-layout {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  .profile-header-card,
-  .about-section-card,
-  .skills-section-card,
-  .experience-section-card {
-    box-shadow: none;
-    border: 1px solid var(--border-light);
+  .header-right-column {
+    width: 100%;
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
   }
 }

@@ -6,10 +6,12 @@ import FilterPanel from "../components/home/FilterPanel";
 import StudentCard from "./StudentCard";
 import Footer from "../components/common/Footer";
 import { studentAPI } from "../services/api";
+import { useLayout } from "../contexts/LayoutContext";
 import "./Students.css";
 
 const Students = () => {
   const navigate = useNavigate();
+  const { getLayoutClass } = useLayout();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -114,7 +116,7 @@ const Students = () => {
     <>
       <HomeNavbar />
       <div className="students-page">
-        <div className="home-layout">
+        <div className={getLayoutClass()}>
           <Sidebar />
 
           <main className="home-main">
@@ -150,9 +152,9 @@ const Students = () => {
               ) : error && students.length === 0 ? (
                 <div className="error-message-box">
                   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
                   </svg>
                   <h3>Failed to load students</h3>
                   <p>{error}</p>
@@ -178,8 +180,8 @@ const Students = () => {
               ) : (
                 <div className="no-results-box">
                   <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <path d="m21 21-4.35-4.35"/>
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
                   </svg>
                   <h3>No students found</h3>
                   <p>
@@ -198,7 +200,7 @@ const Students = () => {
                 </div>
               )}
             </div>
-
+            {/* Footer inside main for correct responsive width */}
             <Footer />
           </main>
 

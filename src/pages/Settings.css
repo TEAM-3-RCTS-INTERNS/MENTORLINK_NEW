@@ -59,10 +59,13 @@ body {
   padding: 2.5rem 3rem 3rem 2.5rem;
   background-color: var(--settings-bg);
   overflow-y: auto;
-  margin-left: 280px;
-  max-width: calc(100% - 280px);
+  margin-left: 260px;
   width: 100%;
-  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin-left 0.3s ease;
+}
+
+.sidebar-collapsed .main-content {
+  margin-left: 72px;
 }
 
 /* Settings Header */
@@ -110,6 +113,13 @@ body {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   font-family: inherit;
+}
+
+.theme-toggle-btn svg,
+.logout-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .theme-toggle-btn {
@@ -201,6 +211,8 @@ body.dark-mode .logout-btn:hover {
 }
 
 .tabs button svg {
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 

@@ -38,6 +38,32 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  // Soft delete fields
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: {
+    type: Date,
+    default: null,
+  },
+  deletionReason: {
+    type: String,
+    default: null,
+  },
+  scheduledPermanentDeletion: {
+    type: Date,
+    default: null,
+  },
+  recoveredAt: {
+    type: Date,
+    default: null,
+  },
+  recoveredBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
   otp: {
     type: String,
   },

@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth, ProfileRedirect } from "./contexts/AuthContext";
 import { ChatProvider } from "./contexts/ChatContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
+import { LayoutProvider } from "./contexts/LayoutContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
@@ -51,10 +52,15 @@ function AppContent() {
     "/mentor-profile",
     "/events",
     "/mentors",
+    "/students",
     "/settings",
     "/host-an-event",
     "/admin"
-  ].includes(location.pathname) || location.pathname.startsWith("/messages");
+  ].includes(location.pathname) ||
+    location.pathname.startsWith("/messages") ||
+    location.pathname.startsWith("/mentors/") ||
+    location.pathname.startsWith("/students/") ||
+    location.pathname.startsWith("/mentor-profile/");
 
   if (loading) return <div>Loading...</div>;
 
@@ -155,7 +161,9 @@ function App() {
     <SettingsProvider>
       <AuthProvider>
         <ChatProvider>
-          <AppContent />
+          <LayoutProvider>
+            <AppContent />
+          </LayoutProvider>
         </ChatProvider>
       </AuthProvider>
     </SettingsProvider>

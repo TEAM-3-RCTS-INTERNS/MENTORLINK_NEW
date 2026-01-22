@@ -33,18 +33,12 @@
 }
 
 .bell-icon {
-  width: 22px;
-  height: 22px;
-  stroke: #000000;
+  width: 20px;
+  height: 20px;
+  color: #374151;
   stroke-width: 2.5;
-  fill: none;
   display: block;
-}
-
-.bell-icon path {
-  stroke: currentColor;
-  stroke-width: 2.5;
-  fill: none;
+  flex-shrink: 0;
 }
 
 /* Unread Badge */
@@ -441,8 +435,8 @@ body.dark-mode .notification-bell-btn:hover {
   color: #ffffff;
 }
 
-body.dark-mode .bell-icon path {
-  stroke: currentColor;
+body.dark-mode .bell-icon {
+  color: #f3f4f6;
 }
 
 body.dark-mode .notification-badge {

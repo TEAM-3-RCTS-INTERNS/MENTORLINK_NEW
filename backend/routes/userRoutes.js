@@ -7,6 +7,7 @@ const {
   sendLoginOTP,
   loginWithOTP,
   uploadProfilePicture,
+  softDeleteAccount,
 } = require('../controllers/userController');
 const { protect } = require('../middleware/auth');
 const { upload, uploadToCloudinary } = require('../middleware/upload');
@@ -43,5 +44,10 @@ router.post('/login-otp', loginWithOTP);
 // @route   POST /api/users/upload-profile-picture
 // @access  Private
 router.post('/upload-profile-picture', protect, upload.single('profileImage'), uploadToCloudinary, uploadProfilePicture);
+
+// @route   DELETE /api/users/account
+// @desc    Soft delete user account (recoverable for 30 days)
+// @access  Private
+router.delete('/account', protect, softDeleteAccount);
 
 module.exports = router;

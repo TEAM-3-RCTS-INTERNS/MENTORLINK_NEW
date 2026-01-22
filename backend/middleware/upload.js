@@ -27,22 +27,20 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
+    fileSize: 10 * 1024 * 1024, // 10MB limit for chat files
   },
   fileFilter: (req, file, cb) => {
-    // Check file type
-    if (!file.mimetype.startsWith('image/')) {
-      return cb(new Error('Only image files are allowed'), false);
+    // For chat attachments, allow images and common file types
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedDocTypes = ['application/pdf', 'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'text/plain'];
+    
+    if (allowedImageTypes.includes(file.mimetype) || allowedDocTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('File type not allowed. Please upload images (jpg, png, gif, webp) or documents (pdf, doc, docx, txt)'), false);
     }
-
-    // Extract extension and check against allowed list
-    const extension = file.originalname.split('.').pop().toLowerCase();
-    const allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-    if (!allowed.includes(extension)) {
-      return cb(new Error(`Only ${allowed.join(', ')} files are allowed`), false);
-    }
-
-    cb(null, true);
   }
 });
 
@@ -67,6 +65,7 @@ const uploadToCloudinary = async (req, res, next) => {
       { width: 300, height: 300, crop: 'fill', gravity: 'face' },
       { quality: 'auto' }
     ];
+    let resourceType = 'image';
 
     // Use different settings for event banners
     if (req.file.fieldname === 'banner') {
@@ -77,12 +76,35 @@ const uploadToCloudinary = async (req, res, next) => {
       ];
     }
 
+    // Use different settings for chat attachments
+    if (req.file.fieldname === 'file') {
+      folder = 'mentorlink-chat';
+      // For images in chat, use reasonable size
+      if (req.file.mimetype.startsWith('image/')) {
+        transformation = [
+          { width: 1200, crop: 'limit' },
+          { quality: 'auto' }
+        ];
+      } else {
+        // For documents, upload as raw
+        resourceType = 'raw';
+        transformation = [];
+      }
+    }
+
     // Create upload stream
+    const uploadOptions = {
+      folder: folder,
+      resource_type: resourceType,
+    };
+    
+    // Only add transformation for images
+    if (resourceType === 'image' && transformation.length > 0) {
+      uploadOptions.transformation = transformation;
+    }
+
     const stream = cloudinary.uploader.upload_stream(
-      {
-        folder: folder,
-        transformation: transformation
-      },
+      uploadOptions,
       (error, result) => {
         if (error) {
           console.error('Cloudinary upload error:', error);

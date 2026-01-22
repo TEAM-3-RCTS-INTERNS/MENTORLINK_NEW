@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const AdminSession = require('../models/AdminSession');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -287,6 +288,16 @@ const authUser = async (req, res) => {
         expiresIn: '30d',
       });
 
+      // If user is an admin, create session tracking
+      if (user.role === 'admin') {
+        try {
+          await AdminSession.createSession(user._id, token, req);
+        } catch (sessionError) {
+          console.error('Error creating admin session:', sessionError);
+          // Continue even if session creation fails
+        }
+      }
+
       return res.json({
         token,
         user: {
@@ -445,6 +456,46 @@ const uploadProfilePicture = async (req, res) => {
   }
 };
 
+// @desc    Soft delete user account (recoverable for 30 days)
+// @route   DELETE /api/users/account
+// @access  Private
+const softDeleteAccount = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { reason } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.role === 'admin') {
+      return res.status(403).json({ message: 'Admin accounts cannot be deleted this way' });
+    }
+
+    // Set soft delete fields
+    const deletedAt = new Date();
+    const scheduledPermanentDeletion = new Date(deletedAt.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
+
+    user.isDeleted = true;
+    user.deletedAt = deletedAt;
+    user.deletionReason = reason || 'User requested account deletion';
+    user.scheduledPermanentDeletion = scheduledPermanentDeletion;
+    user.isVerified = false; // Prevent login
+
+    await user.save();
+
+    res.json({
+      message: 'Account marked for deletion. It will be permanently deleted after 30 days. Contact admin to recover.',
+      deletedAt,
+      scheduledPermanentDeletion,
+    });
+  } catch (error) {
+    console.error('Error in softDeleteAccount:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   verifyOTP,
@@ -452,4 +503,5 @@ module.exports = {
   sendLoginOTP,
   loginWithOTP,
   uploadProfilePicture,
+  softDeleteAccount,
 };

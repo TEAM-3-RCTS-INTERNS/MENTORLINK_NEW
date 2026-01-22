@@ -51,6 +51,9 @@ const studentSchema = new mongoose.Schema({
   profileImage: {
     type: String,
   },
+  bannerImage: {
+    type: String,
+  },
   connectionsCount: {
     type: Number,
     default: 0,

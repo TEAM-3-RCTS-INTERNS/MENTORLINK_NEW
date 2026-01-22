@@ -46,15 +46,25 @@ app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/follow', require('./routes/followRoutes'));
 app.use('/api/testimonials', require('./routes/testimonialRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'MentorLink Backend API' });
 });
 
-// Healthcheck
+// Health check endpoints (for Docker and monitoring)
 app.get('/health', (req, res) => {
   res.json({ ok: true, useFileDb: USE_FILE_DB, ready: isReady });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    ready: isReady
+  });
 });
 
 // Error handling middleware

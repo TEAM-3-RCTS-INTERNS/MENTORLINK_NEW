@@ -604,6 +604,161 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
+// ==================== DELETED ACCOUNTS MANAGEMENT ====================
+
+// @desc    Get all soft-deleted accounts
+// @route   GET /api/admin/deleted-accounts
+// @access  Private (Admin)
+const getDeletedAccounts = async (req, res) => {
+  try {
+    const { page = 1, limit = 20 } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    const deletedUsers = await User.find({ isDeleted: true })
+      .select('-password -otp -otpExpires')
+      .sort({ deletedAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await User.countDocuments({ isDeleted: true });
+
+    // Calculate days remaining for each user
+    const usersWithDaysRemaining = deletedUsers.map(user => {
+      const now = new Date();
+      const scheduledDeletion = new Date(user.scheduledPermanentDeletion);
+      const daysRemaining = Math.max(0, Math.ceil((scheduledDeletion - now) / (1000 * 60 * 60 * 24)));
+      return {
+        ...user.toObject(),
+        daysRemaining,
+      };
+    });
+
+    res.json({
+      deletedAccounts: usersWithDaysRemaining,
+      pagination: {
+        total,
+        page: parseInt(page),
+        pages: Math.ceil(total / parseInt(limit)),
+        limit: parseInt(limit),
+      },
+    });
+  } catch (error) {
+    console.error('Error in getDeletedAccounts:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Recover a soft-deleted account
+// @route   POST /api/admin/deleted-accounts/:id/recover
+// @access  Private (Admin)
+const recoverDeletedAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!user.isDeleted) {
+      return res.status(400).json({ message: 'This account is not deleted' });
+    }
+
+    // Recover the account
+    user.isDeleted = false;
+    user.isVerified = true;
+    user.recoveredAt = new Date();
+    user.recoveredBy = req.user._id;
+    // Keep deletion history for audit purposes but clear scheduled deletion
+    user.scheduledPermanentDeletion = null;
+
+    await user.save();
+
+    // Create audit log
+    await AuditLog.createLog(
+      req.user._id,
+      'user.recover',
+      'user',
+      user._id,
+      { 
+        recoveredAt: user.recoveredAt,
+        originalDeletionDate: user.deletedAt,
+        deletionReason: user.deletionReason 
+      },
+      req
+    );
+
+    res.json({
+      message: 'Account recovered successfully',
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        recoveredAt: user.recoveredAt,
+      },
+    });
+  } catch (error) {
+    console.error('Error in recoverDeletedAccount:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Permanently delete an account (admin action)
+// @route   DELETE /api/admin/deleted-accounts/:id/permanent
+// @access  Private (Admin)
+const permanentlyDeleteAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Store user info for audit before deletion
+    const userInfo = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      deletedAt: user.deletedAt,
+      deletionReason: user.deletionReason,
+    };
+
+    // Delete associated data based on role
+    const Mentor = require('../models/Mentor');
+    const Student = require('../models/Student');
+    
+    if (user.role === 'mentor') {
+      await Mentor.deleteOne({ user: id });
+    } else if (user.role === 'student') {
+      await Student.deleteOne({ user: id });
+    }
+
+    // Delete user
+    await User.deleteOne({ _id: id });
+
+    // Create audit log
+    await AuditLog.createLog(
+      req.user._id,
+      'user.permanent_delete',
+      'user',
+      id,
+      userInfo,
+      req
+    );
+
+    res.json({
+      message: 'Account permanently deleted',
+      deletedUser: userInfo,
+    });
+  } catch (error) {
+    console.error('Error in permanentlyDeleteAccount:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -618,4 +773,7 @@ module.exports = {
   getNotificationStats,
   getAuditLogs,
   getDashboardStats,
+  getDeletedAccounts,
+  recoverDeletedAccount,
+  permanentlyDeleteAccount,
 };

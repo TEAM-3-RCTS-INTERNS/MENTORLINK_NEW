@@ -115,7 +115,7 @@ const getStudentProfile = async (req, res) => {
       return res.json({ student });
     }
 
-    const student = await Student.findOne({ user: userId }).populate('user', 'name email bio');
+    const student = await Student.findOne({ user: userId }).populate('user', 'name email bio profileImage location about connectionsCount');
     if (!student) {
       return res.status(404).json({ message: 'Student profile not found' });
     }
@@ -189,6 +189,28 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// @desc    Update student banner image
+// @route   PUT /api/students/banner-image
+// @access  Private
+const updateBannerImage = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { bannerImage } = req.body;
+
+    const student = await Student.findOne({ user: userId });
+    if (!student) {
+      return res.status(404).json({ message: 'Student profile not found' });
+    }
+
+    student.bannerImage = bannerImage;
+    await student.save();
+
+    res.json({ message: 'Banner image updated', student });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc    Get all students
 // @route   GET /api/students
 // @access  Public
@@ -244,6 +266,7 @@ module.exports = {
   getStudentProfile,
   updateProfileImage,
   updateProfile,
+  updateBannerImage,
   getAllStudents,
   getStudentById,
 };

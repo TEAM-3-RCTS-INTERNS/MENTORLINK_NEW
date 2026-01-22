@@ -54,8 +54,11 @@ const HomeNavbar = () => {
     navigate("/login");
   };
 
-  // Navigate to user’s profile page based on role
+  // Navigate to user's profile page based on role (disabled for admins)
   const onProfileClick = () => {
+    // Don't navigate for admin users
+    if (user?.role === "admin") return;
+    
     if (user?.role === "student") navigate("/student-profile");
     else if (user?.role === "organizer") navigate("/organizer-profile");
     else if (user?.role === "mentor") navigate("/mentor-profile");

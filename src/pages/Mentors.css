@@ -24,10 +24,27 @@
   flex-direction: column;
   gap: 24px;
   flex: 1;
-  margin-left: 280px;
+  margin-left: 260px;
+  margin-right: 300px;
   padding: 24px;
-  max-width: calc(100% - 280px - 320px);
   min-height: calc(100vh - 140px);
+  transition: margin 0.3s ease;
+}
+
+/* Layout adjustments when sidebar is collapsed */
+.home-layout.sidebar-collapsed .home-main {
+  margin-left: 72px;
+}
+
+/* Layout adjustments when filter panel is collapsed */
+.home-layout.filter-collapsed .home-main {
+  margin-right: 0;
+}
+
+/* Layout adjustments when both panels are collapsed */
+.home-layout.sidebar-collapsed.filter-collapsed .home-main {
+  margin-left: 72px;
+  margin-right: 0;
 }
 
 /* Header Section */
@@ -156,7 +173,7 @@
 /* Cards Grid */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 20px;
   width: 100%;
   margin-bottom: 30px;
@@ -204,9 +221,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }
@@ -231,6 +251,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -438,15 +459,23 @@
 /* Responsive Design */
 @media (max-width: 1400px) {
   .home-main {
-    max-width: calc(100% - 280px);
+    margin-right: 260px;
+  }
+
+  .home-layout.filter-collapsed .home-main {
+    margin-right: 0;
   }
 }
 
 @media (max-width: 1024px) {
   .home-main {
-    margin-left: 0;
-    max-width: 100%;
+    margin-left: 72px;
+    margin-right: 0;
     padding: 20px;
+  }
+
+  .home-layout.sidebar-collapsed .home-main {
+    margin-left: 72px;
   }
 
   .cards {

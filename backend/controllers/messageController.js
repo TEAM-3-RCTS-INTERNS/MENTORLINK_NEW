@@ -367,6 +367,31 @@ const searchMessages = async (req, res) => {
   }
 };
 
+// @desc    Upload attachment for chat
+// @route   POST /api/messages/upload
+// @access  Private
+const uploadAttachment = async (req, res) => {
+  try {
+    if (!req.cloudinaryResult) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const { secure_url, public_id, format, bytes, resource_type } = req.cloudinaryResult;
+
+    res.status(200).json({
+      success: true,
+      url: secure_url,
+      publicId: public_id,
+      format,
+      size: bytes,
+      type: resource_type,
+    });
+  } catch (error) {
+    console.error('Error in uploadAttachment:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   sendMessage,
   getConversations,
@@ -375,4 +400,5 @@ module.exports = {
   deleteMessage,
   getUnreadCount,
   searchMessages,
+  uploadAttachment,
 };

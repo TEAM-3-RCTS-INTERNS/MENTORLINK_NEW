@@ -58,11 +58,29 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #000000;
+  color: #1f2937;
   transition: all 0.2s ease;
   position: relative;
 }
 
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+  stroke: #374151;
+  fill: none;
+  display: block;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: #f3f4f6;
+  border-color: #3b82f6;
+}
+
+.icon-btn:hover svg {
+  stroke: #3b82f6;
+}
 
 .messages-btn .badge {
   position: absolute;
@@ -203,7 +221,7 @@ body.dark-mode .icon-btn:hover {
 }
 
 body.dark-mode .icon-btn svg {
-  stroke: currentColor;
+  stroke: #f3f4f6;
   stroke-width: 2.5;
 }
 

@@ -1,395 +1,238 @@
-/* ==========================================
-   Mentor Card - Student Card Style (Blue Theme)
-   ========================================== */
-
-.mentor-brief-card {
-  background: white;
-  border: 2px solid #dbeafe;
-  border-radius: 16px;
-  padding: 20px;
+/* Overall Card Container */
+.mentor-card-pro {
+  padding: 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: white !important;
+  border-radius: 20px !important;
+  border: 1px solid #f0f0f0 !important;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+  transition: all 0.3s ease !important;
+  min-height: auto !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
 }
 
-.mentor-brief-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-  border-color: #3b82f6;
+.mentor-card-pro:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(255, 145, 77, 0.15) !important;
+  border-color: #ff914d !important;
 }
 
 /* Header Section */
-.mentor-brief-content {
-  padding: 0 !important;
-}
-
-.mentor-header-section {
+.mentor-card__header-pro {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 12px;
 }
 
-.mentor-avatar-brief {
-  width: 60px !important;
-  height: 60px !important;
+.mentor-card__avatar-pro {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #3b82f6 !important;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  border: 2.5px solid #ff914d;
+  box-shadow: 0 4px 10px rgba(255, 145, 77, 0.15);
+  flex-shrink: 0;
 }
 
-.mentor-header-info {
-  flex: 1;
+.mentor-avatar-wrapper-pro {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
-.mentor-name-verified {
+.mentor-avatar-badge-pro {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: white;
+  border: 1px solid #ff914d;
+  color: #ff914d;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+.mentor-card__info-pro {
+  flex: 1;
+  min-width: 0;
+}
+
+.mentor-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 2px;
 }
 
-.mentor-name-heading {
-  font-size: 18px !important;
-  font-weight: 700 !important;
+.mentor-card__name-pro {
+  font-size: 17px !important;
+  font-weight: 600 !important;
   color: #1f2937 !important;
   margin: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.verified-badge-pro {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  background: #ff914d;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 10px;
+  flex-shrink: 0;
 }
 
-.verified-badge-icon {
-  color: #3b82f6;
-  font-size: 14px;
-  stroke-width: 2.5;
+.mentor-card__meta-pro {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
-.mentor-role-title,
-.mentor-exp-years {
-  color: #6b7280 !important;
-  font-size: 12px !important;
-  display: inline;
-  margin: 0 !important;
-}
-
-.mentor-followers-count {
-  color: #9ca3af !important;
-  font-size: 11px !important;
-  margin-top: 4px;
-  display: block;
-}
-
-/* Description Section */
-.mentor-description-section {
-  margin: 10px 0;
-}
-
-.mentor-description-text {
-  margin: 0 !important;
-  color: #1f2937 !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  line-height: 1.5 !important;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.mentor-card__subtitle-pro {
+  color: #9ca3af;
+  font-size: 13px;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Body / Bio Section */
+.mentor-card__body-pro {
+  margin-bottom: 10px;
+}
+
+.mentor-card__bio-pro {
+  margin: 0 !important;
+  color: #4b5563 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  max-height: 42px !important;
 }
 
 /* Skills Section */
-.mentor-skills-section {
+.mentor-card__skills-pro {
   display: flex;
   flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.mentor-tag-pro {
+  background: #fff8f3;
+  color: #ff914d;
+  border: 1px solid #ffe4cc;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mentor-tag-pro.tag--more {
+  background: #f3f4f6;
+  color: #6b7280;
+  border-color: #e5e7eb;
+}
+
+/* Footer / Actions Section */
+.mentor-card__footer-pro {
+  margin-top: auto;
+}
+
+.mentor-card__actions-pro {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.mentor-btn-pro {
+  flex: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
-  margin: 12px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-transform: capitalize;
 }
 
-.skill-tag-chip {
-  background: #dbeafe !important;
-  border: 1px solid #93c5fd !important;
-  border-radius: 999px !important;
-  padding: 6px 12px !important;
-  font-size: 12px !important;
-  color: #3b82f6 !important;
-  font-weight: 600 !important;
-  height: auto !important;
-  transition: all 0.2s ease !important;
+.mentor-btn-pro svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+  flex-shrink: 0;
 }
 
-.skill-tag-chip .MuiChip-label {
-  padding: 0 !important;
+.mentor-btn-follow {
+  background: white;
+  color: #ff914d;
+  border: 1.5px solid #ff914d;
 }
 
-.skill-tag-chip:hover {
-  background: #bfdbfe !important;
-  border-color: #3b82f6 !important;
+.mentor-btn-follow:hover {
+  background: #fff8f3;
+  transform: translateY(-1px);
 }
 
-.skill-tag-more {
-  background: #fef3c7 !important;
-  color: #d97706 !important;
-  border-color: #fbbf24 !important;
+.mentor-btn-connect {
+  background: linear-gradient(135deg, #ff914d, #ff7f32);
+  color: white;
 }
 
-.skill-tag-more:hover {
-  background: #fde68a !important;
-  border-color: #f59e0b !important;
+.mentor-btn-connect:hover {
+  background: linear-gradient(135deg, #ff7f32, #ff6b1a);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 145, 77, 0.25);
 }
 
-/* Core Domain */
-.mentor-core-domain {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #dbeafe;
-}
-
-.core-domain-heading {
-  font-size: 12px !important;
-  color: #6b7280 !important;
-  font-weight: 600 !important;
-  margin-right: 4px !important;
-}
-
-.core-domain-text {
-  font-size: 13px !important;
-  color: #3b82f6 !important;
-  font-weight: 600 !important;
-}
-
-/* Actions Section */
-.mentor-actions-section {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  margin-top: 16px !important;
-  padding: 12px 0 0 0 !important;
-  border-top: 1px solid #dbeafe !important;
-  background: transparent !important;
-  gap: 12px !important;
-}
-
-/* Followers Count in Footer */
-.mentor-actions-section::before {
-  content: none;
-}
-
-.connect-action-btn {
-  padding: 8px 20px !important;
-  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
-  text-transform: none !important;
-  flex: 1;
-}
-
-.connect-action-btn .MuiButton-startIcon {
-  margin-right: 6px !important;
-  margin-left: 0 !important;
-}
-
-.connect-action-btn:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35) !important;
-}
-
-.follow-action-btn {
-  padding: 8px 20px !important;
-  background: linear-gradient(135deg, #10b981, #059669) !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25) !important;
-  text-transform: none !important;
-  flex: 1;
-}
-
-.follow-action-btn .MuiButton-startIcon {
-  margin-right: 6px !important;
-  margin-left: 0 !important;
-}
-
-.follow-action-btn:hover {
-  background: linear-gradient(135deg, #059669, #047857) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
-}
-
-.following-active {
-  background: white !important;
-  color: #6b7280 !important;
-  border: 2px solid #e5e7eb !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-.following-active:hover {
-  background: #f9fafb !important;
-  border-color: #d1d5db !important;
-  transform: translateY(0) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
-}
-
-.follow-action-btn:disabled {
-  background: #e5e7eb !important;
-  color: #9ca3af !important;
-  cursor: not-allowed !important;
-  box-shadow: none !important;
+.mentor-btn-pro:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
-/* ==================== DARK MODE ==================== */
-
-body.dark-mode .mentor-brief-card {
-  background: #1f2937;
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+/* Dark Mode Overrides */
+body.dark-mode .mentor-card-pro {
+  background: #1e293b !important;
+  border-color: #334155 !important;
 }
 
-body.dark-mode .mentor-brief-card:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+body.dark-mode .mentor-card__name-pro {
+  color: #f9fafb !important;
 }
 
-body.dark-mode .mentor-name-heading,
-body.dark-mode .mentor-description-text {
-  color: #e5e7eb !important;
+body.dark-mode .mentor-card__bio-pro {
+  color: #d1d5db !important;
 }
 
-body.dark-mode .mentor-role-title,
-body.dark-mode .mentor-exp-years,
-body.dark-mode .mentor-followers-count {
-  color: #9ca3af !important;
+body.dark-mode .mentor-tag-pro {
+  background: rgba(255, 145, 77, 0.1);
+  border-color: rgba(255, 145, 77, 0.2);
 }
 
-body.dark-mode .mentor-actions-section {
-  border-top-color: rgba(59, 130, 246, 0.2) !important;
-}
-
-body.dark-mode .skill-tag-chip {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border-color: rgba(59, 130, 246, 0.4) !important;
-  color: #93c5fd !important;
-}
-
-body.dark-mode .skill-tag-chip:hover {
-  background: rgba(59, 130, 246, 0.3) !important;
-  border-color: rgba(59, 130, 246, 0.6) !important;
-}
-
-body.dark-mode .skill-tag-more {
-  background: rgba(245, 158, 11, 0.2) !important;
-  border-color: rgba(245, 158, 11, 0.4) !important;
-  color: #fbbf24 !important;
-}
-
-body.dark-mode .skill-tag-more:hover {
-  background: rgba(245, 158, 11, 0.3) !important;
-  border-color: rgba(245, 158, 11, 0.6) !important;
-}
-
-body.dark-mode .mentor-core-domain {
-  border-top-color: rgba(59, 130, 246, 0.2);
-}
-
-body.dark-mode .core-domain-heading {
-  color: #9ca3af !important;
-}
-
-body.dark-mode .core-domain-text {
-  color: #93c5fd !important;
-}
-
-body.dark-mode .verified-badge-icon {
-  color: #60a5fa;
-}
-
-body.dark-mode .connect-action-btn {
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
-}
-
-body.dark-mode .connect-action-btn:hover {
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
-}
-
-body.dark-mode .follow-action-btn {
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
-}
-
-body.dark-mode .follow-action-btn:hover {
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
-}
-
-body.dark-mode .following-active {
-  background: #374151 !important;
-  color: #e5e7eb !important;
-  border-color: #4b5563 !important;
-}
-
-body.dark-mode .following-active:hover {
-  background: #4b5563 !important;
-  border-color: #6b7280 !important;
-}
-
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 768px) {
-  .mentor-avatar-brief {
-    width: 52px !important;
-    height: 52px !important;
-  }
-
-  .mentor-name-heading {
-    font-size: 16px !important;
-  }
-
-  .mentor-role-title,
-  .mentor-exp-years {
-    font-size: 11px !important;
-  }
-
-  .mentor-description-text {
-    font-size: 13px !important;
-  }
-
-  .skill-tag-chip {
-    font-size: 11px !important;
-    padding: 5px 10px !important;
-  }
-
-  .connect-action-btn,
-  .follow-action-btn {
-    font-size: 12px !important;
-    padding: 7px 16px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .mentor-brief-card {
-    padding: 16px;
-  }
-
-  .mentor-avatar-brief {
-    width: 48px !important;
-    height: 48px !important;
-  }
-
-  .mentor-actions-section {
-    flex-direction: column;
-    gap: 8px !important;
-  }
-
-  .connect-action-btn,
-  .follow-action-btn {
-    width: 100%;
-  }
+body.dark-mode .mentor-btn-follow {
+  background: transparent;
+  border-color: #ff914d;
 }

@@ -10,12 +10,84 @@
   width: 300px;
   overflow-y: auto;
   z-index: 90;
+  transition: width 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Toggle button inside panel */
+.filter-panel__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.filter-panel__toggle svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+  stroke: currentColor;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.filter-panel__toggle:hover {
+  background: #f3f4f6;
+  border-color: #10b981;
+  color: #10b981;
+}
+
+/* Expand button when filter is collapsed */
+.filter-panel__expand-btn {
+  position: fixed;
+  right: 16px;
+  top: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #d1fae5;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #10b981;
+  cursor: pointer;
+  z-index: 90;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+.filter-panel__expand-btn:hover {
+  background: #f0fdf4;
+  border-color: #10b981;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.filter-panel__expand-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2.5;
+  stroke: currentColor;
+  color: inherit;
+  flex-shrink: 0;
 }
 
 .filter-panel__title {
   font-weight: 800;
   font-size: 18px;
   margin-bottom: 16px;
+  margin-top: 8px;
   color: #111827;
   display: flex;
   align-items: center;
@@ -90,6 +162,42 @@ body.dark-mode .filter-panel {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+body.dark-mode .filter-panel__toggle {
+  background: rgba(55, 65, 81, 0.8);
+  border-color: #4b5563;
+  color: #e5e7eb;
+}
+
+body.dark-mode .filter-panel__toggle svg {
+  stroke: #e5e7eb;
+}
+
+body.dark-mode .filter-panel__toggle:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #10b981;
+}
+
+body.dark-mode .filter-panel__toggle:hover svg {
+  stroke: #10b981;
+}
+
+body.dark-mode .filter-panel__expand-btn {
+  background: rgba(31, 41, 55, 0.95);
+  border-color: #374151;
+  color: #10b981;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .filter-panel__expand-btn svg {
+  stroke: #10b981;
+}
+
+body.dark-mode .filter-panel__expand-btn:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+}
+
 body.dark-mode .filter-panel__title {
   color: #f9fafb;
   font-weight: 700;
@@ -145,10 +253,19 @@ body.dark-mode .chip--active:hover {
     width: 260px;
     padding: 16px;
   }
+
+  .filter-panel__toggle {
+    top: 16px;
+    right: 16px;
+  }
 }
 
 @media (max-width: 1024px) {
   .filter-panel {
+    display: none;
+  }
+
+  .filter-panel__expand-btn {
     display: none;
   }
 }

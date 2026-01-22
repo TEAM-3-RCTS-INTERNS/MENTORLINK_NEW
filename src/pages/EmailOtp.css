@@ -558,8 +558,84 @@
 }
 
 /* ============================================
-   DARK MODE SUPPORT (OPTIONAL)
+   DARK MODE SUPPORT
    ============================================ */
+body.dark-mode .otp-page {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+body.dark-mode .otp-container {
+  background: #1e293b;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .otp-header-icon {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+}
+
+body.dark-mode .otp-title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .otp-subtitle {
+  color: #94a3b8;
+}
+
+body.dark-mode .otp-email-display {
+  color: #a78bfa;
+}
+
+body.dark-mode .otp-input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .otp-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+body.dark-mode .otp-input.error {
+  border-color: #f56565;
+}
+
+body.dark-mode .otp-input.success {
+  border-color: #48bb78;
+}
+
+body.dark-mode .otp-message {
+  color: #94a3b8;
+}
+
+body.dark-mode .otp-resend-text {
+  color: #94a3b8;
+}
+
+body.dark-mode .otp-resend-button {
+  color: #a78bfa;
+}
+
+body.dark-mode .otp-resend-button:hover {
+  color: #c4b5fd;
+}
+
+body.dark-mode .otp-footer {
+  border-top-color: #334155;
+}
+
+body.dark-mode .otp-footer-text {
+  color: #64748b;
+}
+
+body.dark-mode .otp-footer-link {
+  color: #a78bfa;
+}
+
+body.dark-mode .otp-footer-link:hover {
+  color: #c4b5fd;
+}
+
 @media (prefers-color-scheme: dark) {
   /* Add dark mode styles here if needed */
 }

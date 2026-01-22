@@ -61,8 +61,10 @@
 
 .nav-back-button svg,
 .nav-edit-button svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  flex-shrink: 0;
 }
 
 .nav-edit-button {
@@ -226,8 +228,8 @@
 }
 
 .quick-info-icon {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 40px;
+  height: 40px;
   color: #10b981;
   flex-shrink: 0;
 }
@@ -290,9 +292,10 @@
 }
 
 .section-icon {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 28px;
+  height: 28px;
   color: #10b981;
+  flex-shrink: 0;
 }
 
 .important-section .section-icon {
@@ -438,8 +441,9 @@
 }
 
 .button-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* Share Card */
@@ -462,9 +466,10 @@
 }
 
 .share-btn svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 24px;
+  height: 24px;
   color: var(--text-secondary, #4b5563);
+  flex-shrink: 0;
 }
 
 .share-btn:hover {

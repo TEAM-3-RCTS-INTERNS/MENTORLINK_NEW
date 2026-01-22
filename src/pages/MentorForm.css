@@ -465,3 +465,78 @@
     border: 1px solid var(--border-color);
   }
 }
+
+/* ==================== DARK MODE ==================== */
+body.dark-mode .student-form-page {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+body.dark-mode .student-form-container {
+  background: #1e293b;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .student-title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .student-title::after {
+  background: #667eea;
+}
+
+body.dark-mode .form-group label {
+  color: #e2e8f0;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group select,
+body.dark-mode .form-group textarea {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark-mode .form-group input::placeholder,
+body.dark-mode .form-group textarea::placeholder {
+  color: #64748b;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group select:focus,
+body.dark-mode .form-group textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+body.dark-mode .tag {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+  color: #a5b4fc;
+}
+
+body.dark-mode .tag.selected {
+  background: #667eea;
+  color: white;
+}
+
+body.dark-mode .checkbox-group label {
+  color: #e2e8f0;
+}
+
+body.dark-mode .add-link-btn {
+  background: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+body.dark-mode .add-link-btn:hover {
+  background: #475569;
+}
+
+body.dark-mode .remove-btn {
+  color: #f87171;
+}
+
+body.dark-mode .remove-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}

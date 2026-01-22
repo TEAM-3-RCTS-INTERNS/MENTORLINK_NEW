@@ -16,7 +16,6 @@
     "@mui/material": "^7.3.4",
     "axios": "^1.12.2",
     "date-fns": "^4.1.0",
-    "icons": "^1.0.0",
     "jwt-decode": "^4.0.0",
     "mongodb": "^6.19.0",
     "react": "^19.1.1",

@@ -4,6 +4,7 @@ import HomeNavbar from "../components/common/HomeNavbar";
 import Sidebar from "../components/home/Sidebar";
 import { organizerAPI } from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
+import { useLayout } from "../contexts/LayoutContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./OrganizerProfile.css";
@@ -11,6 +12,7 @@ import "./OrganizerProfile.css";
 const OrganizerProfile = () => {
   const navigate = useNavigate();
   const { loading: authLoading, isAuthenticated } = useAuth();
+  const { sidebarCollapsed } = useLayout();
   const profileImageRef = useRef(null);
   const coverImageRef = useRef(null);
 
@@ -268,7 +270,7 @@ const OrganizerProfile = () => {
   return (
     <div className="organizer-profile">
       <HomeNavbar />
-      <div className="app-container">
+      <div className={`app-container${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
         <Sidebar />
         <div className="main-content">
           <div className="profile-page-container">

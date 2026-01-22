@@ -4,12 +4,14 @@ import HomeNavbar from "../components/common/HomeNavbar";
 import Sidebar from "../components/home/Sidebar";
 import { useSettings } from "../contexts/SettingsContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useLayout } from "../contexts/LayoutContext";
 import './Settings.css';
 
 const Settings = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { settings, toggleDarkMode, updateSecurity, updateLocation, updateAccount, updateNotifications } = useSettings();
+  const { sidebarCollapsed } = useLayout();
 
   const [activeTab, setActiveTab] = useState("general");
   const [formData, setFormData] = useState({
@@ -65,13 +67,20 @@ const Settings = () => {
     alert('Account settings saved successfully!');
   };
 
-  const handleDeleteAccount = () => {
+  const handleDeleteAccount = async () => {
     const confirmed = window.confirm(
-      'Are you sure you want to delete your account? This action cannot be undone.'
+      'Are you sure you want to delete your account? Your account will be deactivated and scheduled for permanent deletion after 30 days. You can contact the admin to recover your account within this period.'
     );
     if (confirmed) {
-      logout();
-      navigate('/');
+      try {
+        const { userAPI } = await import('../services/api');
+        await userAPI.deleteAccount('User requested account deletion');
+        alert('Your account has been scheduled for deletion. You will be logged out now. Contact admin within 30 days if you wish to recover your account.');
+        logout();
+        navigate('/');
+      } catch (error) {
+        alert(error.message || 'Failed to delete account. Please try again.');
+      }
     }
   };
 
@@ -83,7 +92,7 @@ const Settings = () => {
   return (
     <>
       <HomeNavbar />
-      <div className="flex min-h-screen">
+      <div className={`flex min-h-screen${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
         <Sidebar />
 
         <div className="main-content">
@@ -290,8 +299,7 @@ const Settings = () => {
 
               {/* Danger Zone */}
               <div className="danger-zone">
-                <h3>Danger Zone</h3>
-                <p>Once you delete your account, there is no going back. Please be certain.</p>
+                <p>Deleting your account will deactivate it for 30 days. During this period, you can contact admin to recover it. After 30 days, your account will be permanently deleted.</p>
                 <button className="delete-btn" onClick={handleDeleteAccount}>
                   <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd"/>

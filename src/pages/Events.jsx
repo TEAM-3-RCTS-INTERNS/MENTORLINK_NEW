@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import HomeNavbar from "../components/common/HomeNavbar";
 import Sidebar from "../components/home/Sidebar";
+import Footer from "../components/common/Footer";
+import { useLayout } from "../contexts/LayoutContext";
 import "./Events.css";
 
 const Events = () => {
   const navigate = useNavigate();
+  const { sidebarCollapsed } = useLayout();
   const [popularEvents, setPopularEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
   const [trendingEvents, setTrendingEvents] = useState([]);
@@ -173,61 +176,63 @@ const Events = () => {
   return (
     <div className="events-page">
       <HomeNavbar />
-      <div className="events-layout">
+      <div className={`events-layout${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
         <Sidebar />
         <main className="events-main-content">
           {/* Hero Section */}
           <section className="hero-section">
-            <h1 className="hero-title">
-              Don't miss out!<br />
-              Explore the <span className="highlight">vibrant events</span><br />
-              happening locally and globally.
-            </h1>
+            <div className="hero-content">
+              <h1 className="hero-title">
+                Don't miss out!<br />
+                Explore the <span className="highlight">vibrant events</span><br />
+                happening locally and globally.
+              </h1>
 
-            {/* Search Bar */}
-            <div className="search-container">
-              <div className="search-box">
-                <div className="search-input-wrapper">
-                  <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Search events by title, city, or organizer"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-
-                {/* Location Selector */}
-                <div className="location-selector" ref={locationDropdownRef}>
-                  <button
-                    className="location-button"
-                    onClick={() => setShowLocationDropdown(!showLocationDropdown)}
-                  >
-                    <svg className="location-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              {/* Search Bar */}
+              <div className="search-container">
+                <div className="search-box">
+                  <div className="search-input-wrapper">
+                    <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <span>{selectedLocation}</span>
-                  </button>
+                    <input
+                      type="text"
+                      placeholder="Search events by title, city, or organizer"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                  </div>
 
-                  {showLocationDropdown && (
-                    <div className="location-dropdown">
-                      {indianCities.map((city) => (
-                        <button
-                          key={city}
-                          className="location-item"
-                          onClick={() => {
-                            setSelectedLocation(city);
-                            setShowLocationDropdown(false);
-                          }}
-                        >
-                          {city}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {/* Location Selector */}
+                  <div className="location-selector" ref={locationDropdownRef}>
+                    <button
+                      className="location-button"
+                      onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+                    >
+                      <svg className="location-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>{selectedLocation}</span>
+                    </button>
+
+                    {showLocationDropdown && (
+                      <div className="location-dropdown">
+                        {indianCities.map((city) => (
+                          <button
+                            key={city}
+                            className="location-item"
+                            onClick={() => {
+                              setSelectedLocation(city);
+                              setShowLocationDropdown(false);
+                            }}
+                          >
+                            {city}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -409,6 +414,9 @@ const Events = () => {
               Create Event
             </button>
           </section>
+
+          {/* Footer inside main for correct responsive width */}
+          <Footer />
         </main>
       </div>
     </div>
@@ -422,7 +430,7 @@ const EventCard = ({ event, isInterested, onToggleInterest }) => {
   const priceDisplay = event.price === 0 ? (
     <span className="price-free">FREE</span>
   ) : (
-    <span className="price-paid">₹{event.price.toLocaleString()}</span>
+    <span className="price-paid">Paid · ₹{event.price.toLocaleString()}</span>
   );
 
   const handleCardClick = () => {
