@@ -18,8 +18,12 @@ const createOrUpdateMentor = async (req, res) => {
     skills,
   } = req.body;
 
-  // const user = req.user._id; // Old way (requires authentication)
-  const { user } = req.body; // New way (from request body)
+  // SECURITY FIX: Always use authenticated user ID to prevent unauthorized profile creation
+  const user = req.user?._id || req.body.user;
+
+  if (!user) {
+    return res.status(401).json({ message: 'User authentication required' });
+  }
 
   try {
     let mentor = await Mentor.findOne({ user });

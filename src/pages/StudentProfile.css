@@ -659,7 +659,90 @@
 /* Mobile Navbar matches HomeNavbar mobile height (64px) */
 @media (max-width: 480px) {
   .app-container {
-    padding-top: 64px;
+    padding-top: 60px;
+    min-height: calc(100vh - 60px);
+  }
+
+  .student-profile-main {
+    margin-left: 0;
+    padding-bottom: 70px; /* Account for bottom nav */
+  }
+
+  .profile-content-section {
+    padding: 0.75rem 1rem;
+  }
+
+  .profile-banner {
+    height: 100px;
+  }
+
+  .profile-photo-wrapper {
+    margin-top: -30px;
+  }
+
+  .profile-photo-large {
+    width: 70px;
+    height: 70px;
+  }
+
+  .student-name-large {
+    font-size: 1.25rem;
+  }
+
+  .student-headline {
+    font-size: 0.875rem;
+  }
+
+  .profile-header-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .profile-header-actions button {
+    width: 100%;
+  }
+
+  .section-title-profile {
+    font-size: 1rem;
+  }
+
+  .mentors-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .mentor-mini-card {
+    padding: 0.75rem;
+  }
+
+  .details-grid {
+    gap: 0.75rem;
+  }
+
+  .detail-item {
+    padding: 0.75rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .profile-content-section {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .profile-photo-large {
+    width: 60px;
+    height: 60px;
+  }
+
+  .student-name-large {
+    font-size: 1.125rem;
+  }
+
+  .profile-header-actions button {
+    padding: 0.5rem;
+    font-size: 0.8125rem;
   }
 }
 

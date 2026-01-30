@@ -237,7 +237,7 @@ body.dark-mode .sidebar::-webkit-scrollbar-track {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sidebar {
     width: 72px;
     padding: 16px 8px;
@@ -263,5 +263,97 @@ body.dark-mode .sidebar::-webkit-scrollbar-track {
 
   .sidebar__badge--collapsed {
     display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 64px;
+    padding: 12px 6px;
+    top: 60px;
+    height: calc(100vh - 60px);
+  }
+
+  .sidebar__item {
+    padding: 10px;
+  }
+
+  .sidebar__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sidebar__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* On small mobile screens, hide sidebar completely */
+@media (max-width: 480px) {
+  .sidebar {
+    display: none;
+  }
+
+  /* Show sidebar as bottom navigation on mobile */
+  .sidebar--mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px 4px;
+    border-right: none;
+    border-top: 1px solid var(--sidebar-border, #e5e7eb);
+    z-index: 1000;
+    background: var(--sidebar-bg, #ffffff);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar--mobile-nav .sidebar__list {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    gap: 4px;
+  }
+
+  .sidebar--mobile-nav .sidebar__item {
+    flex-direction: column;
+    padding: 8px 12px;
+    gap: 4px;
+    border-radius: 8px;
+    min-width: 60px;
+  }
+
+  .sidebar--mobile-nav .sidebar__item:hover {
+    transform: none;
+  }
+
+  .sidebar--mobile-nav .sidebar__label {
+    display: block;
+    font-size: 10px;
+  }
+
+  .sidebar--mobile-nav .sidebar__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sidebar--mobile-nav .sidebar__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sidebar--mobile-nav .sidebar__toggle {
+    display: none;
+  }
+
+  body.dark-mode .sidebar--mobile-nav {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
   }
 }

@@ -8,6 +8,15 @@ const connectDB = require('./config/db');
 // Load environment variables
 dotenv.config();
 
+// Security packages (optional - check if installed)
+let helmet, rateLimit;
+try {
+  helmet = require('helmet');
+  rateLimit = require('express-rate-limit');
+} catch (e) {
+  console.warn('Optional security packages (helmet, express-rate-limit) not installed. Run: npm install helmet express-rate-limit');
+}
+
 // DB/Readiness flags
 const USE_FILE_DB = String(process.env.USE_FILE_DB || 'false').toLowerCase() === 'true';
 let isReady = false;
@@ -32,8 +41,43 @@ app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true
 }));
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded (form) bodies
+
+// Security middleware (if available)
+if (helmet) {
+  app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: false // Disable for API server
+  }));
+}
+
+// Rate limiting for authentication routes
+if (rateLimit) {
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Limit each IP to 20 requests per windowMs for auth endpoints
+    message: { message: 'Too many attempts, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
+  const generalLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 100, // Limit each IP to 100 requests per minute
+    message: { message: 'Too many requests, please slow down.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
+  // Apply rate limiting
+  app.use('/api/users/login', authLimiter);
+  app.use('/api/users/signup', authLimiter);
+  app.use('/api/users/verify-otp', authLimiter);
+  app.use('/api/users/login-otp', authLimiter);
+  app.use('/api/', generalLimiter);
+}
+
+app.use(express.json({ limit: '10mb' })); // Parse JSON bodies with size limit
+app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Parse URL-encoded (form) bodies
 
 // Routes
 app.use('/api/users', require('./routes/userRoutes'));

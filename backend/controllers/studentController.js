@@ -18,14 +18,17 @@ const createOrUpdateStudent = async (req, res) => {
     portfolio,
   } = req.body;
 
-  // const user = req.user._id; // Old way (requires authentication)
-  const { user } = req.body; // New way (from request body)
+  // SECURITY FIX: Prefer authenticated user ID, fall back to body for backwards compatibility
+  const user = req.user?._id || req.body.user;
+
+  if (!user) {
+    return res.status(401).json({ message: 'User authentication required' });
+  }
 
   try {
     const isUuidLike = typeof user === 'string' && user.includes('-') && user.length >= 16;
     const useFilePath = isFileDbEnabled() || isUuidLike;
-    // eslint-disable-next-line no-console
-    console.log('[students] useFilePath=', useFilePath, 'USE_FILE_DB=', isFileDbEnabled(), 'isUuidLike=', isUuidLike, 'user=', user);
+    // Debug logging removed for production
     if (useFilePath) {
       // File DB flow
       let student = fileDb.findStudentByUser(user);
@@ -119,7 +122,6 @@ const getStudentProfile = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student profile not found' });
     }
-    console.log(student)
     res.json({ student });
   } catch (error) {
     res.status(500).json({ message: error.message });

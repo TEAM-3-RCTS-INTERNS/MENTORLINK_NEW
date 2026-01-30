@@ -1,14 +1,30 @@
 const { MailtrapClient } = require("mailtrap");
 
-const TOKEN = "e5b77683a98c512a3b8404da16881003";
+// SECURITY FIX: Load token from environment variable
+const TOKEN = process.env.MAILTRAP_TOKEN;
 
-const client = new MailtrapClient({
+if (!TOKEN) {
+  console.warn('WARNING: MAILTRAP_TOKEN not set in environment variables');
+}
+
+const client = TOKEN ? new MailtrapClient({
   token: TOKEN,
-});
+}) : null;
 
 const sender = {
   email: "hello@demomailtrap.co",
   name: "MentorLink Contact Form",
+};
+
+// SECURITY FIX: HTML escape function to prevent XSS in emails
+const escapeHtml = (text) => {
+  if (!text) return '';
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 };
 
 // Simple in-memory rate limiting (for production, use Redis)
@@ -107,27 +123,39 @@ const submitContactForm = async (req, res) => {
     });
   }
 
+  // Check if email client is configured
+  if (!client) {
+    console.error('Mailtrap client not configured - MAILTRAP_TOKEN missing');
+    return res.status(503).json({ message: 'Email service temporarily unavailable' });
+  }
+
   try {
     const recipients = [
       {
-        email: "mentorlink9@gmail.com",
+        email: process.env.CONTACT_EMAIL || "mentorlink9@gmail.com",
       }
     ];
+
+    // SECURITY FIX: Escape all user input before embedding in HTML
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message);
 
     const result = await client.send({
       from: sender,
       to: recipients,
-      subject: `Contact Form: ${subject}`,
+      subject: `Contact Form: ${safeSubject}`,
       text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
       html: `
         <h3>New Contact Form Submission</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Subject:</strong> ${safeSubject}</p>
         <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p>${safeMessage}</p>
         <hr>
-        <p><em>Reply to: ${email}</em></p>
+        <p><em>Reply to: ${safeEmail}</em></p>
         <p><small>Submissions remaining for this IP: ${rateCheck.remaining}</small></p>
       `,
       category: "Contact Form",
@@ -137,8 +165,8 @@ const submitContactForm = async (req, res) => {
     res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error.message);
-    console.error('Full error:', error);
-    res.status(500).json({ message: 'Failed to send message', error: error.message });
+    // SECURITY FIX: Don't expose internal error details to client
+    res.status(500).json({ message: 'Failed to send message. Please try again later.' });
   }
 };
 

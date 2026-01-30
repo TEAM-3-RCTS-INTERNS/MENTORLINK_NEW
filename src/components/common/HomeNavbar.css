@@ -300,7 +300,7 @@ body.dark-mode .messages-btn .badge {
 
 @media (max-width: 480px) {
   .navbar {
-    height: 64px;
+    height: 60px;
   }
 
   .navbar-container {
@@ -308,7 +308,7 @@ body.dark-mode .messages-btn .badge {
   }
 
   .navbar-right {
-    gap: 6px;
+    gap: 4px;
   }
 
   .icon-btn {
@@ -321,9 +321,18 @@ body.dark-mode .messages-btn .badge {
     height: 18px;
   }
 
+  /* Hide logout button on very small screens, keep icon only */
   .logout-btn {
-    padding: 6px 10px;
-    font-size: 12px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+  }
+
+  .logout-btn span,
+  .logout-btn-text {
+    display: none;
   }
 
   .avatar {
@@ -333,12 +342,50 @@ body.dark-mode .messages-btn .badge {
   }
 
   .logo-image {
-    height: 36px;
+    height: 32px;
   }
 
   .messages-btn .badge {
     min-width: 16px;
     height: 16px;
     font-size: 9px;
+    top: -4px;
+    right: -4px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .navbar {
+    height: 56px;
+  }
+
+  .navbar-right {
+    gap: 2px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .logout-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .logo-image {
+    height: 28px;
   }
 }

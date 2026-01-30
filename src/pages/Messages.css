@@ -810,3 +810,135 @@ body.dark-mode .chat-message-file {
 body.dark-mode .chat-message-file:hover {
   background: rgba(255, 255, 255, 0.15);
 }
+
+/* ==================== ENHANCED MOBILE RESPONSIVENESS ==================== */
+
+/* Small tablets */
+@media (max-width: 640px) {
+  .messages-layout {
+    padding: 12px;
+    height: calc(100vh - 56px);
+  }
+
+  .messages-header {
+    padding: 16px 20px;
+  }
+
+  .messages-header h1 {
+    font-size: 20px;
+  }
+
+  .messages-subtitle {
+    font-size: 12px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .messages-page .app-container {
+    padding-top: 56px;
+    min-height: calc(100vh - 56px);
+  }
+
+  .messages-layout {
+    padding: 8px;
+    height: calc(100vh - 56px);
+  }
+
+  .messages-left-panel {
+    border-radius: 12px;
+  }
+
+  .messages-right-panel.active {
+    top: 56px;
+  }
+
+  .messages-header {
+    padding: 14px 16px;
+  }
+
+  .messages-header h1 {
+    font-size: 18px;
+  }
+
+  .empty-messages-state {
+    padding: 48px 20px;
+  }
+
+  .empty-messages-state h3 {
+    font-size: 16px;
+  }
+
+  .empty-messages-state p {
+    font-size: 13px;
+  }
+
+  /* Chat panel adjustments */
+  .chat-panel-header {
+    padding: 12px 14px;
+  }
+
+  .chat-participant-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .chat-participant-info h2 {
+    font-size: 14px;
+  }
+
+  .chat-status {
+    font-size: 11px;
+  }
+
+  /* Message bubbles */
+  .chat-message-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .chat-message-time {
+    font-size: 10px;
+  }
+
+  /* Input area */
+  .chat-input-wrapper {
+    padding: 10px 12px;
+  }
+
+  .chat-input-field {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .chat-send-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .messages-layout {
+    padding: 6px;
+  }
+
+  .messages-header {
+    padding: 12px 14px;
+  }
+
+  .messages-header h1 {
+    font-size: 16px;
+  }
+
+  .chat-message-bubble {
+    max-width: 85%;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .chat-input-wrapper {
+    padding: 8px 10px;
+  }
+}

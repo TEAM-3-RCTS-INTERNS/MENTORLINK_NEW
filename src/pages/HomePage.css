@@ -2059,3 +2059,131 @@ body.dark-mode .skeleton-event-image {
   background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
   background-size: 200% 100%;
 }
+
+/* ===================
+   ENHANCED MOBILE RESPONSIVENESS
+   =================== */
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .home-main {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 16px 12px;
+    gap: 20px;
+  }
+
+  .home-layout.sidebar-collapsed .home-main,
+  .home-layout.filter-collapsed .home-main,
+  .home-layout.sidebar-collapsed.filter-collapsed .home-main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .welcome-heading {
+    font-size: 24px;
+  }
+
+  .welcome-emoji {
+    font-size: 28px;
+  }
+
+  .welcome-tagline {
+    font-size: 14px;
+  }
+
+  .welcome-quote__text {
+    font-size: 14px;
+  }
+
+  .mentors-grid,
+  .students-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .event-card {
+    flex: 0 0 85vw;
+    max-width: 300px;
+  }
+
+  .section__title {
+    font-size: 16px;
+  }
+
+  .section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .banner-container {
+    height: 200px;
+  }
+
+  .banner-card__img {
+    height: 140px;
+  }
+
+  .banner-card__info h4 {
+    font-size: 15px;
+  }
+
+  .banner-card__info p {
+    font-size: 12px;
+  }
+
+  .testimonial-card-new {
+    flex: 0 0 85vw;
+    max-width: 300px;
+    padding: 16px;
+  }
+
+  .testimonial-card-new__text {
+    font-size: 13px;
+    min-height: 60px;
+  }
+
+  .testimonial-card-new__avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stay-tuned-card {
+    flex: 0 0 180px;
+    min-height: 140px;
+    padding: 16px 12px;
+  }
+
+  .events-section__title {
+    font-size: 18px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .home-main {
+    padding: 12px 8px;
+    gap: 16px;
+  }
+
+  .welcome-heading {
+    font-size: 20px;
+  }
+
+  .welcome-greeting-row {
+    gap: 8px;
+  }
+
+  .event-card {
+    flex: 0 0 90vw;
+  }
+
+  .section__title {
+    font-size: 15px;
+  }
+
+  .banner-container {
+    height: 180px;
+  }
+}

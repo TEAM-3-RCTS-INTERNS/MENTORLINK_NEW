@@ -53,7 +53,8 @@ const getTransporter = async () => {
     maxConnections: 3,
     maxMessages: 50,
     tls: {
-      rejectUnauthorized: false,
+      // SECURITY FIX: Enable TLS verification in production
+      rejectUnauthorized: process.env.NODE_ENV === 'production',
     },
   });
 
